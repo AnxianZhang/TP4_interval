@@ -8,6 +8,8 @@
 #include "Interval.h"
 
 typedef struct Node {
+    unsigned int id;
+    char *description;
     Interval *interval;
     struct Node *right;
     struct Node *left;
