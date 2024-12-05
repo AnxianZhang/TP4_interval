@@ -5,4 +5,11 @@
 #ifndef INTERVAL_H
 #define INTERVAL_H
 
+typedef struct Interval{
+    unsigned int id;
+    char *description;
+    unsigned int start;
+    unsigned int end;
+}Interval;
+
 #endif //INTERVAL_H
