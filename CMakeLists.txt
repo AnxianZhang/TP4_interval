@@ -8,4 +8,5 @@ add_executable(main.c
         Interval.h
         Interval.c
         Node.h
+        Node.c
 )
