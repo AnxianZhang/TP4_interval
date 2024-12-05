@@ -43,8 +43,11 @@ void test() {
 
     // ========== LE CAS OU LA PERIODE OU NUM ENREPISE INDIQUER EXISTE PAS N'EST PAS ENCORE TRAITE ==========
     //showCompany(tree, 1);
-    showPeriod(tree, period);
-
+    //showPeriod(tree, period);
+    deleteAllFree(tree);
+    //free(tree);
+    tree = NULL;
+    showTree(tree);
 }
 
 int main() {
