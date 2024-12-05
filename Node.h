@@ -29,7 +29,7 @@ void updateReservation(Tree *tree, Interval *current, Interval *newInterval, uns
 
 void showTree(const Tree tree);
 
-void showCompany(const Tree *tree, unsigned int id);
+void showCompany(const Tree tree, unsigned int id);
 
 void showPeriod(const Tree *tree, const Interval *period);
 

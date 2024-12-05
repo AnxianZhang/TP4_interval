@@ -69,3 +69,20 @@ void showTree(const Tree tree) {
 
     showTree(tree->right);
 }
+
+void showCompany(const Tree tree, unsigned int id) {
+    if (!tree) return;
+    showCompany(tree->left, id);
+
+    if (tree->id == id) {
+        char *startDate = getParsedDate(tree->interval->start);
+        char *endDate = getParsedDate(tree->interval->end);
+
+        printf("%s to %s : company %d - %s \n", startDate, endDate, tree->id, tree->description);
+
+        free(startDate);
+        free(endDate);
+    }
+
+    showCompany(tree->right, id);
+}

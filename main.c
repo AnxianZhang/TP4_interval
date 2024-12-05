@@ -24,12 +24,20 @@ void test() {
     i4->start = 101;
     i4->end = 107;
 
+    Interval *i5 = malloc(sizeof(Interval));
+    i5->start = 228;
+    i5->end = 328;
+
     Tree tree = createNode(1, "J'aime les pommes au cafe", i);
     tree->right = createNode(2, "pomme ?", i2);
     tree->right->right = createNode(3, "cafe ?", i3);
+    tree->right->left = createNode(3, "the ?", i5);
+
     tree->left = createNode(4, "1e fruit ?", i4);
 
-    showTree(tree);
+    //showTree(tree);
+    showCompany(tree, 1);
+
 }
 
 int main() {
