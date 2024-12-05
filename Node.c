@@ -86,3 +86,21 @@ void showCompany(const Tree tree, unsigned int id) {
 
     showCompany(tree->right, id);
 }
+
+void showPeriod(const Tree tree, const Interval *period) {
+    if (!tree) return;
+    showPeriod(tree->left, period);
+
+    if ((tree->interval->start >= period->start && tree->interval->start <= period->end) ||
+        (tree->interval->end >= period->start && tree->interval->end <= period->end)) {
+        char *startDate = getParsedDate(tree->interval->start);
+        char *endDate = getParsedDate(tree->interval->end);
+
+        printf("%s to %s : company %d - %s \n", startDate, endDate, tree->id, tree->description);
+
+        free(startDate);
+        free(endDate);
+    }
+
+    showPeriod(tree->right, period);
+}

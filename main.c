@@ -10,7 +10,7 @@
 void test() {
     Interval *i = malloc(sizeof(Interval));
     i->start = 110;
-    i->end = 225;
+    i->end = 214;
 
     Interval *i2 = malloc(sizeof(Interval));
     i2->start = 225;
@@ -25,7 +25,7 @@ void test() {
     i4->end = 107;
 
     Interval *i5 = malloc(sizeof(Interval));
-    i5->start = 228;
+    i5->start = 220;
     i5->end = 328;
 
     Tree tree = createNode(1, "J'aime les pommes au cafe", i);
@@ -35,8 +35,15 @@ void test() {
 
     tree->left = createNode(4, "1e fruit ?", i4);
 
+    Interval *period = malloc(sizeof(Interval));
+    period->start = 701;
+    period->end = 1230;
+
     //showTree(tree);
-    showCompany(tree, 1);
+
+    // ========== LE CAS OU LA PERIODE OU NUM ENREPISE INDIQUER EXISTE PAS N'EST PAS ENCORE TRAITE ==========
+    //showCompany(tree, 1);
+    showPeriod(tree, period);
 
 }
 
