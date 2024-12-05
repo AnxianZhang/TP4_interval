@@ -33,6 +33,6 @@ void showCompany(const Tree tree, unsigned int id);
 
 void showPeriod(const Tree tree, const Interval *period);
 
-void deleteAllFree(const Tree *tree);
+void deleteAllFree(Tree tree);
 
 #endif //NODE_H

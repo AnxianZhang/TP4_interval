@@ -104,3 +104,19 @@ void showPeriod(const Tree tree, const Interval *period) {
 
     showPeriod(tree->right, period);
 }
+
+void freeAllNodes(const Tree tree) {
+}
+
+void deleteAllFree(Tree tree) {
+    if (!tree) return;
+    deleteAllFree(tree->left);
+    deleteAllFree(tree->right);
+
+    printf("umh\n");
+
+    free(tree->description);
+    free(tree->interval);
+
+    free(tree);
+}
