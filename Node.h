@@ -27,7 +27,7 @@ void deleteReservation(Tree *tree, Interval *interval, unsigned int id);
 
 void updateReservation(Tree *tree, Interval *current, Interval *newInterval, unsigned int id);
 
-void showTree(const Tree *tree);
+void showTree(const Tree tree);
 
 void showCompany(const Tree *tree, unsigned int id);
 
