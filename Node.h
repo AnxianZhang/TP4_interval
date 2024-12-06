@@ -27,12 +27,18 @@ void deleteReservation(Tree *tree, Interval *interval, unsigned int id);
 
 void updateReservation(Tree *tree, Interval *current, Interval *newInterval, unsigned int id);
 
+char *getParsedDate(unsigned int date);
+
 void showTree(const Tree tree);
+
+int isIdPresent(const Tree tree, unsigned int id);
+
+int isIntervalContainingReservation(const Tree tree, const Interval *period);
 
 void showCompany(const Tree tree, unsigned int id);
 
 void showPeriod(const Tree tree, const Interval *period);
 
-void deleteAllFree(Tree tree);
+void deleteAll(Tree tree);
 
 #endif //NODE_H

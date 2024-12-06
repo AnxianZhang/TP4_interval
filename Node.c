@@ -70,6 +70,31 @@ void showTree(const Tree tree) {
     showTree(tree->right);
 }
 
+int isIdPresent(const Tree tree, unsigned int id) {
+    if (!tree) return 0;
+
+    if (tree->id == id)
+        return 1;
+
+    if (isIdPresent(tree->left, id))
+        return 1;
+
+    return isIdPresent(tree->right, id);
+}
+
+int isIntervalContainingReservation(const Tree tree, const Interval *period) {
+    if (!tree) return 0;
+
+    if ((tree->interval->start >= period->start && tree->interval->start <= period->end) ||
+        (tree->interval->end >= period->start && tree->interval->end <= period->end))
+        return 1;
+
+    if (isIntervalContainingReservation(tree->left, period))
+        return 1;
+
+    return isIntervalContainingReservation(tree->right, period);
+}
+
 void showCompany(const Tree tree, unsigned int id) {
     if (!tree) return;
     showCompany(tree->left, id);
@@ -105,15 +130,11 @@ void showPeriod(const Tree tree, const Interval *period) {
     showPeriod(tree->right, period);
 }
 
-void freeAllNodes(const Tree tree) {
-}
-
-void deleteAllFree(Tree tree) {
+void deleteAll(Tree tree) {
     if (!tree) return;
-    deleteAllFree(tree->left);
-    deleteAllFree(tree->right);
 
-    printf("umh\n");
+    deleteAll(tree->left);
+    deleteAll(tree->right);
 
     free(tree->description);
     free(tree->interval);
