@@ -1,12 +1,44 @@
 //
 // Created by Bryan on 12/5/2024.
 //
-
-#include "Node.h"
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "Interval.h"
+#include "Node.h"
+
+/*
+ *NB a et b sont des dates
+ * comparator retoune 1 si a est a droite de b
+ *                     0 si a est a gauche d eb
+ *                    -1 si les deux dates sont pareille
+ */
+int comparator(int a, int b) {
+    if (a/100>b/100)
+          return 1;
+    else {
+        if (a/100==b/100){
+            if (a%100>b%100)
+                return 1;
+            if (a/100<b%100)
+                return 0;
+            return -1;
+        }
+        else
+            return 0;
+    }
+}
+Node *searchReservation(Tree tree, Interval *interval, int id) {
+    Node *node = tree;
+        while(node->id != id && node) {
+            if(comparator(node->interval->start,interval->end)==1)
+                node=node->left;
+            if(comparator(node->interval->end,interval->start)==0)
+                node=node->right;
+        }
+        return node;
+}
+
 
 void extractSubString(char *src, char *dest, unsigned int start, unsigned int length) {
     strncpy(dest, src + start, length);
