@@ -54,7 +54,6 @@ void test() {
 }
 
 
-
 int main() {
     // time(); // essayer de récupérer l'année accutuele
 
@@ -106,13 +105,13 @@ int main() {
         switch (choice) {
             case '1':
                 interfaceShowTree(tree);
-            break;
+                break;
             case '2':
                 interfaceShowCompany(tree);
-            break;
+                break;
             case '3':
                 interfaceShowPeriod(tree);
-            break;
+                break;
             case '4':
                 break;
             case '5':
@@ -121,7 +120,7 @@ int main() {
                 break;
             case '7':
                 printf("\n======== PROGRAM FINISHED ========\n");
-            break;
+                break;
             default:
                 printf("\n\nERROR : INVALID CHOICE ! ");
         }
