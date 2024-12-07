@@ -14,29 +14,29 @@
  *                    -1 si les deux dates sont pareille
  */
 int comparator(int a, int b) {
-    if (a/100>b/100)
-          return 1;
+    if (a / 100 > b / 100)
+        return 1;
     else {
-        if (a/100==b/100){
-            if (a%100>b%100)
+        if (a / 100 == b / 100) {
+            if (a % 100 > b % 100)
                 return 1;
-            if (a/100<b%100)
+            if (a / 100 < b % 100)
                 return 0;
             return -1;
-        }
-        else
+        } else
             return 0;
     }
 }
-Node *searchReservation(Tree tree, Interval *interval, int id) {
+
+Node *searchReservation(const Tree tree, const Interval *interval, unsigned int id) {
     Node *node = tree;
-        while(node->id != id && node) {
-            if(comparator(node->interval->start,interval->end)==1)
-                node=node->left;
-            if(comparator(node->interval->end,interval->start)==0)
-                node=node->right;
-        }
-        return node;
+    while (node->id != id && node) {
+        if (comparator(node->interval->start, interval->end) == 1)
+            node = node->left;
+        if (comparator(node->interval->end, interval->start) == 0)
+            node = node->right;
+    }
+    return node;
 }
 
 

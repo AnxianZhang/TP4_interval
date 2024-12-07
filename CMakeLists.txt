@@ -9,4 +9,6 @@ add_executable(main.c
         Interval.c
         Node.h
         Node.c
+        Utile.c
+        Interfaces.c
 )
