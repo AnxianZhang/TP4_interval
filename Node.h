@@ -23,9 +23,9 @@ void addReservation(Tree tree, unsigned int id, Interval *interval, char *descri
 
 Node *searchReservation(const Tree tree, const Interval *interval, unsigned int id);
 
-void deleteReservation(Tree *tree, Interval *interval, unsigned int id);
+void deleteReservation(Tree tree, Interval *interval, unsigned int id);
 
-void updateReservation(Tree *tree, Interval *current, Interval *newInterval, unsigned int id);
+void updateReservation(Tree tree, Interval *current, Interval *newInterval, unsigned int id);
 
 char *getParsedDate(unsigned int date);
 

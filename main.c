@@ -53,10 +53,14 @@ void test() {
     showTree(tree);
 }
 
+
+
 int main() {
     // time(); // essayer de récupérer l'année accutuele
 
     // test(); // fonction utilsier pour les testes en dure
+
+
     Interval *i = malloc(sizeof(Interval));
     i->start = 110;
     i->end = 214;
@@ -102,13 +106,13 @@ int main() {
         switch (choice) {
             case '1':
                 interfaceShowTree(tree);
-                break;
+            break;
             case '2':
                 interfaceShowCompany(tree);
-                break;
+            break;
             case '3':
                 interfaceShowPeriod(tree);
-                break;
+            break;
             case '4':
                 break;
             case '5':
@@ -117,7 +121,7 @@ int main() {
                 break;
             case '7':
                 printf("\n======== PROGRAM FINISHED ========\n");
-                break;
+            break;
             default:
                 printf("\n\nERROR : INVALID CHOICE ! ");
         }
@@ -125,6 +129,7 @@ int main() {
         emptyBuffer();
         printf("\n\n\n");
     }
+
 
     deleteAll(tree);
     tree = NULL;
