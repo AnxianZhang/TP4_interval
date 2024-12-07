@@ -39,6 +39,35 @@ Node *searchReservation(const Tree tree, const Interval *interval, unsigned int 
     return node;
 }
 
+void addReservation(Tree tree, unsigned int id, Interval *interval, char *description) {
+    if(!searchReservation(tree,interval,id)) {
+        int test=0;
+        Node *node = createNode(id, description,interval);
+        Node *p=tree;
+        Node *q=tree;
+        while(p) {
+            q=p;
+            if(comparator(p->interval->start,interval->end)==1)
+                p=p->left;
+            else if(comparator(p->interval->end,interval->start)==0)
+                p=p->right;
+            else {
+                test=1;
+                p=NULL; // to out of the loop
+            }
+        }
+        if(test==1)
+            printf("interval invalide\n");
+        else {
+            if(comparator(q->interval->start,interval->end)==1)
+                q->left=node;
+            if(comparator(q->interval->end,interval->start)==0)
+                q->right=node;
+        }
+    }
+    else
+        printf("resavation unavailable \n");
+}
 
 void extractSubString(char *src, char *dest, unsigned int start, unsigned int length) {
     strncpy(dest, src + start, length);
