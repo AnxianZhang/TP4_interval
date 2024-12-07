@@ -43,7 +43,8 @@ Node *searchReservation(const Tree tree, const Interval *interval, unsigned int 
 }
 
 void addReservation(Tree tree, unsigned int id, Interval *interval, char *description) {
-    if (!searchReservation(tree, interval, id)) {
+    Node *test_node = searchReservation(tree, interval, id);
+    if (!test_node) {
         int test = 0;
         Node *node = createNode(id, description, interval);
         Node *p = tree;
@@ -86,11 +87,11 @@ void *father(Tree tree, Node *node) {
                 test = 0;
                 p = NULL; // to out of the loop
             }
-            if (test == 1)
-                return q;
-            else
-                return p; //p=NULL
         }
+        if (test == 1)
+            return q;
+        else
+            return p; //p=NULL
     }
 }
 
@@ -115,8 +116,9 @@ Node *successor(Tree tree, Tree node) {
     }
 }
 
-void deleteNode(Tree tree, Node *node) {
-    if (tree && node) {
+void deleteReservation(Tree tree, Interval *interval, unsigned int id) {
+    if (tree && interval) {
+        Node *node = searchReservation(tree, interval, id);
         Node *p = father(tree, node);
         if (!node->left && !node->right) {
             if (p->left == node)
@@ -141,8 +143,20 @@ void deleteNode(Tree tree, Node *node) {
             node->description = p->description;
             node->id = p->id;
             node->interval = p->interval;
-            deleteNode(tree, p);
+            deleteReservation(tree, p->interval, p->id);
         }
+    }
+}
+
+void updateReservation(Tree tree, Interval *current, Interval *newInterval, unsigned int id) {
+    if (tree && current && newInterval) {
+        Node *node = searchReservation(tree, current, id);
+        if (node) {
+            char *description = node->description;
+            deleteReservation(tree, node->interval, node->id);
+            addReservation(tree, id, newInterval, description);
+        } else
+            printf("resavation unavailable \n");
     }
 }
 
@@ -233,8 +247,11 @@ int isIntervalContainingReservation(const Tree tree, const Interval *period) {
     return isIntervalContainingReservation(tree->right, period);
 }
 
-void showCompany(const Tree tree, unsigned int id) {
-    if (!tree) return;
+int showCompany(const Tree tree, unsigned int id) {
+    if (!tree) return 0;
+
+    int flag = 0;
+
     showCompany(tree->left, id);
 
     if (tree->id == id) {
@@ -245,13 +262,19 @@ void showCompany(const Tree tree, unsigned int id) {
 
         free(startDate);
         free(endDate);
+
+        flag = 1;
     }
 
     showCompany(tree->right, id);
+    return flag;
 }
 
-void showPeriod(const Tree tree, const Interval *period) {
-    if (!tree) return;
+int showPeriod(const Tree tree, const Interval *period) {
+    if (!tree) return 0;
+
+    int flag = 0;
+
     showPeriod(tree->left, period);
 
     if ((tree->interval->start >= period->start && tree->interval->start <= period->end) ||
@@ -263,9 +286,12 @@ void showPeriod(const Tree tree, const Interval *period) {
 
         free(startDate);
         free(endDate);
+
+        flag = 1;
     }
 
     showPeriod(tree->right, period);
+    return flag;
 }
 
 void deleteAll(Tree tree) {

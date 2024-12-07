@@ -35,11 +35,12 @@ int isIdPresent(const Tree tree, unsigned int id);
 
 int isIntervalContainingReservation(const Tree tree, const Interval *period);
 
-void showCompany(const Tree tree, unsigned int id);
+int showCompany(const Tree tree, unsigned int id);
 
-void showPeriod(const Tree tree, const Interval *period);
+int showPeriod(const Tree tree, const Interval *period);
 
 void deleteAll(Tree tree);
 
 int comparator(int a, int b);
+
 #endif //NODE_H

@@ -38,16 +38,12 @@ void interfaceShowCompany(const Tree tree) {
         return;
     }
 
-    char messageBuffer[BUFFER_MAX_SIZE + 1] = {""};
+    if (!showCompany(tree, id)) {
+        char messageBuffer[BUFFER_MAX_SIZE + 1] = {""};
 
-    if (!isIdPresent(tree, id)) {
         snprintf(messageBuffer, BUFFER_MAX_SIZE + 1, "The company number %d haven't make reservation !", id);
         printErrorTreeMessages(messageBuffer);
-        return;
     }
-
-    printf("The reservations for the company number %d are:\n", id);
-    showCompany(tree, id);
 }
 
 void interfaceShowPeriod(const Tree tree) {
@@ -55,32 +51,21 @@ void interfaceShowPeriod(const Tree tree) {
     i.start = getUserNumber("Enter the start of the period:");
     i.end = getUserNumber("Enter the end of the period:");
 
-
     if (!hasTreeAndLeftRight(tree)) {
         printEmptyTreeMessages();
         return;
     }
 
-    char *startDateBuffer = getParsedDate(i.start);
-    char *endDateBuffer = getParsedDate(i.end);
-    char messageBuffer[BUFFER_MAX_SIZE + 1] = {""};
+    if (!showPeriod(tree, &i)) {
+        char *startDateBuffer = getParsedDate(i.start);
+        char *endDateBuffer = getParsedDate(i.end);
+        char messageBuffer[BUFFER_MAX_SIZE + 1] = {""};
 
-    if (!isIntervalContainingReservation(tree, &i)) {
         snprintf(
             messageBuffer,BUFFER_MAX_SIZE + 1,
             "There are no reservation in the period of %s to %s !",
             startDateBuffer, endDateBuffer
         );
         printErrorTreeMessages(messageBuffer);
-        return;
     }
-
-    snprintf(
-        messageBuffer, BUFFER_MAX_SIZE + 1,
-        "The reservation between %s and %s are:",
-        startDateBuffer, endDateBuffer
-    );
-    printf("%s\n", messageBuffer);
-
-    showPeriod(tree, &i);
 }
