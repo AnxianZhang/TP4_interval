@@ -1,5 +1,5 @@
 //
-// Created by gadan on 12/5/2024.
+// Created by ZHANG ANXIAN AND MIGUEU BRYAN on 12/5/2024.
 //
 
 #include "Node.h"
@@ -7,6 +7,144 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "Interval.h"
+#include "Node.h"
+
+/*
+ *NB a et b sont des dates
+ * comparator retoune 1 si a est a droite de b
+ *                     0 si a est a gauche d eb
+ *                    -1 si les deux dates sont pareille
+ */
+int comparator(int a, int b) {
+    if (a / 100 > b / 100)
+        return 1;
+    else {
+        if (a / 100 == b / 100) {
+            if (a % 100 > b % 100)
+                return 1;
+            if (a / 100 < b % 100)
+                return 0;
+            return -1;
+        } else
+            return 0;
+    }
+}
+
+Node *searchReservation(const Tree tree, const Interval *interval, unsigned int id) {
+    Node *node = tree;
+    while (node->id != id && node) {
+        if (comparator(node->interval->start, interval->end) == 1)
+            node = node->left;
+        if (comparator(node->interval->end, interval->start) == 0)
+            node = node->right;
+    }
+    return node;
+}
+
+void addReservation(Tree tree, unsigned int id, Interval *interval, char *description) {
+    if (!searchReservation(tree, interval, id)) {
+        int test = 0;
+        Node *node = createNode(id, description, interval);
+        Node *p = tree;
+        Node *q = tree;
+        while (p) {
+            q = p;
+            if (comparator(p->interval->start, interval->end) == 1)
+                p = p->left;
+            else if (comparator(p->interval->end, interval->start) == 0)
+                p = p->right;
+            else {
+                test = 1;
+                p = NULL; // to out of the loop
+            }
+        }
+        if (test == 1)
+            printf("interval invalide\n");
+        else {
+            if (comparator(q->interval->start, interval->end) == 1)
+                q->left = node;
+            if (comparator(q->interval->end, interval->start) == 0)
+                q->right = node;
+        }
+    } else
+        printf("resavation unavailable \n");
+}
+
+void *father(Tree tree, Node *node) {
+    if (tree && node) {
+        Node *p = tree;
+        Node *q = tree;
+        int test = 1;
+        while (p != node) {
+            q = p;
+            if (comparator(p->interval->start, node->interval->end) == 1)
+                p = p->left;
+            else if (comparator(p->interval->end, node->interval->start) == 0)
+                p = p->right;
+            else {
+                test = 0;
+                p = NULL; // to out of the loop
+            }
+            if (test == 1)
+                return q;
+            else
+                return p; //p=NULL
+        }
+    }
+}
+
+Node *successor(Tree tree, Tree node) {
+    if (tree) {
+        Node *p;
+        if (node->right) {
+            p = node->right;
+            while (p->left) {
+                p = p->left;
+            }
+            return p;
+        } else {
+            p = node;
+            Node *pere = father(tree, p);
+            while (p && pere->right == p) {
+                p = pere;
+                pere = father(tree, pere);
+            }
+            return pere;
+        }
+    }
+}
+
+void deleteNode(Tree tree, Node *node) {
+    if (tree && node) {
+        Node *p = father(tree, node);
+        if (!node->left && !node->right) {
+            if (p->left == node)
+                p->left = NULL;
+            if (p->right == node)
+                p->right = NULL;
+            free(node);
+        } else if (node->left) {
+            if (p->left == node)
+                p->left = node->left;
+            if (p->right == node)
+                p->right = node->left;
+            free(node);
+        } else if (node->right) {
+            if (p->left == node)
+                p->left = node->right;
+            if (p->right == node)
+                p->right = node->right;
+            free(node);
+        } else {
+            p = successor(tree, node);
+            node->description = p->description;
+            node->id = p->id;
+            node->interval = p->interval;
+            deleteNode(tree, p);
+        }
+    }
+}
 
 void extractSubString(char *src, char *dest, unsigned int start, unsigned int length) {
     strncpy(dest, src + start, length);
