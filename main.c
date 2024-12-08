@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-
 #include "Interfaces.h"
 #include "Interval.h"
 #include "Node.h"
@@ -89,7 +88,7 @@ int main() {
 
     char choice = ' ';
 
-    while (choice != '7') {
+    while (choice != '8') {
         printf("#################### MENU ####################\n");
         printf("| 1. Show all reservations\n");
         printf("| 2. Show all reservations of a company\n");
@@ -97,7 +96,8 @@ int main() {
         printf("| 4. Add a reservation\n");
         printf("| 5. Update a reservation\n");
         printf("| 6. Delete a reservation\n");
-        printf("| 7. Leave\n");
+        printf("| 7. search a reservation\n");
+        printf("| 8. Leave\n");
         printf("##############################################\n");
 
         choice = getUserNumber("Enter your choice:") + '0'; // convert to char
@@ -113,12 +113,19 @@ int main() {
                 interfaceShowPeriod(tree);
                 break;
             case '4':
+                interfaceAddreservation(tree);
+                //interfaceShowPeriod(tree); c'est quoi cette fonction ?
                 break;
             case '5':
+                interfaceUpdateReservation(tree);
                 break;
             case '6':
+                interfaceDeletereservaion(tree);
                 break;
             case '7':
+                interfaceSearchReservation(tree);
+            break;
+            case '8':
                 printf("\n======== PROGRAM FINISHED ========\n");
                 break;
             default:

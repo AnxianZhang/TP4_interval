@@ -22,3 +22,14 @@ int getUserNumber(const char *message) {
 
     return number;
 }
+
+char getUserString(const char *message) {
+    unsigned char chaine ;
+
+    printf("%s", message);
+    gets(chaine);
+    emptyBuffer();
+
+    return chaine;
+}
+
