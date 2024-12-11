@@ -12,34 +12,50 @@
 
 /*
  *NB a et b sont des dates
- * comparator retoune 1 si a est a droite de b
+ * comparatorDate retoune 1 si a est a droite de b
  *                     0 si a est a gauche d eb
  *                    -1 si les deux dates sont pareille
  */
-int comparator(int a, int b) {
+int comparatorDate(int a, int b) {
     if (a / 100 > b / 100)
         return 1;
     else {
         if (a / 100 == b / 100) {
             if (a % 100 > b % 100)
                 return 1;
-            if (a / 100 < b % 100)
+            if (a % 100 < b % 100)
                 return 0;
             return -1;
         } else
             return 0;
     }
 }
+/*
+ *NB a et b sont des dates
+ * comparatorInterval retoune 1 si a est a droite de b
+ *                     0 si a est a gauche d eb
+ *                     **** -1 si les deux intervales sont pareille et 0 si non
+ */
 
-Node *searchReservation(const Tree tree, const Interval *interval, unsigned int id) {
+int comparatorInteval(Interval *a, Interval *b) {
+    if(comparatorDate(a->start,b->start)==-1 && comparatorDate(a->end,b->end)==-1)
+        return -1;
+    return 0;
+}
+
+Node *searchReservation(const Tree tree, Interval *interval, unsigned int id) {
     Node *node = tree;
-    while (node->id != id && node) {
-        if (comparator(node->interval->start, interval->end) == 1)
+    while (node && node->id != id) {
+        if (comparatorDate(node->interval->start, interval->end) == 1)
             node = node->left;
-        if (comparator(node->interval->end, interval->start) == 0)
+        else if (comparatorDate(node->interval->end, interval->start) == 0)
             node = node->right;
+        else return NULL;;
     }
-    return node;
+    if(comparatorInteval(node->interval,interval)==-1)
+        return node;
+    else
+        return NULL;
 }
 
 void addReservation(Tree tree, unsigned int id, Interval *interval, char *description) {
@@ -51,9 +67,9 @@ void addReservation(Tree tree, unsigned int id, Interval *interval, char *descri
         Node *q = tree;
         while (p) {
             q = p;
-            if (comparator(p->interval->start, interval->end) == 1)
+            if (comparatorDate(p->interval->start, interval->end) == 1)
                 p = p->left;
-            else if (comparator(p->interval->end, interval->start) == 0)
+            else if (comparatorDate(p->interval->end, interval->start) == 0)
                 p = p->right;
             else {
                 test = 1;
@@ -63,9 +79,9 @@ void addReservation(Tree tree, unsigned int id, Interval *interval, char *descri
         if (test == 1)
             printf("interval invalide\n");
         else {
-            if (comparator(q->interval->start, interval->end) == 1)
+            if (comparatorDate(q->interval->start, interval->end) == 1)
                 q->left = node;
-            if (comparator(q->interval->end, interval->start) == 0)
+            if (comparatorDate(q->interval->end, interval->start) == 0)
                 q->right = node;
         }
     } else
@@ -79,9 +95,9 @@ void *father(Tree tree, Node *node) {
         int test = 1;
         while (p != node) {
             q = p;
-            if (comparator(p->interval->start, node->interval->end) == 1)
+            if (comparatorDate(p->interval->start, node->interval->end) == 1)
                 p = p->left;
-            else if (comparator(p->interval->end, node->interval->start) == 0)
+            else if (comparatorDate(p->interval->end, node->interval->start) == 0)
                 p = p->right;
             else {
                 test = 0;

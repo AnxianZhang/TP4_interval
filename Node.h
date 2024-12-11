@@ -21,7 +21,7 @@ Node *createNode(unsigned int id, char *description, Interval *interval);
 
 void addReservation(Tree tree, unsigned int id, Interval *interval, char *description);
 
-Node *searchReservation(const Tree tree, const Interval *interval, unsigned int id);
+Node *searchReservation(const Tree tree,  Interval *interval, unsigned int id);
 
 void deleteReservation(Tree tree, Interval *interval, unsigned int id);
 
@@ -41,6 +41,8 @@ int showPeriod(const Tree tree, const Interval *period);
 
 void deleteAll(Tree tree);
 
-int comparator(int a, int b);
+int comparatorDate(int a, int b);
+
+int comparatorInteval(Interval *a, Interval *b);
 
 #endif //NODE_H

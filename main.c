@@ -80,11 +80,11 @@ int main() {
     i5->end = 328;
 
     Tree tree = createNode(1, "J'aime les pommes au cafe", i);
-    tree->right = createNode(2, "pomme ?", i2);
-    tree->right->right = createNode(3, "cafe ?", i3);
-    tree->right->left = createNode(3, "the ?", i5);
+    tree->right = createNode(11, "pomme ?", i2);
+    tree->right->right = createNode(111, "cafe ?", i3);
+    tree->right->left = createNode(110, "the ?", i5);
 
-    tree->left = createNode(4, "1e fruit ?", i4);
+    tree->left = createNode(10, "1e fruit ?", i4);
 
     char choice = ' ';
 
