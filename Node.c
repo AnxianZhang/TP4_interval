@@ -34,7 +34,7 @@ int comparatorDate(int a, int b) {
  *NB a et b sont des dates
  * comparatorInterval retoune 1 si a est a droite de b
  *                     0 si a est a gauche d eb
- *                     **** -1 si les deux intervales sont pareille et 0 si non
+ *                     -1 si les deux intervales sont pareille et 0 si non
  */
 
 int comparatorInteval(Interval *a, Interval *b) {

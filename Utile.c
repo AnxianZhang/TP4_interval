@@ -3,7 +3,8 @@
 //
 
 #include "Utile.h"
-
+#include <stdlib.h>
+#include <string.h>
 #include <stdio.h>
 
 void emptyBuffer() {
@@ -23,11 +24,18 @@ int getUserNumber(const char *message) {
     return number;
 }
 
-char getUserString(const char *message) {
-    unsigned char chaine ;
+char *getUserString(const char *message) {
+
+
+    char *chaine = (char *)malloc(100 * sizeof(char));
+    if (chaine == NULL) {
+        printf("Erreur d'allocation mémoire.\n");
+        exit(1);  // exit the program
+    }
 
     printf("%s", message);
-    gets(chaine);
+    fgets(chaine, 1000, stdin);
+
     emptyBuffer();
 
     return chaine;

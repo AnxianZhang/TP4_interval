@@ -104,7 +104,7 @@ int getUserValideDate(){
 void interfaceAddreservation(const Tree tree) {
     int id = getUserNumber("\nWhich id reservation you want to add ?: ");
     Interval interval;
-    char description;
+    char *description;
     printf("\n******** start date");
     interval.start = getUserValideDate();
     printf("\n******** end date");
@@ -114,7 +114,7 @@ void interfaceAddreservation(const Tree tree) {
         interval.end = getUserValideDate();
     }
     description= getUserString("\nDescription reservation you want to add : ");
-    addReservation(tree, id, &interval, &description);
+    addReservation(tree, id, &interval, description);
 }
 void interfaceUpdateReservation(const Tree tree) {
     int id = getUserNumber("\nWhich id reservation you want to update ?: ");
