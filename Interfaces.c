@@ -4,6 +4,7 @@
 
 #include "Interfaces.h"
 
+#include <stdbool.h>
 #include <stdio.h>
 
 #include <stdlib.h>
@@ -20,9 +21,11 @@ int hasTreeAndLeftRight(const Tree tree) {
 
 void printErrorTreeMessages(const char *specificMessage) {
     printf("%s\n", specificMessage);
-    printf("Please try again later\n");
+    printf("Please try again\n\n");
 }
-void printErrorMessages(const char *specificMessage) { // it's for bryan
+
+void printErrorMessages(const char *specificMessage) {
+    // it's for bryan
     printf("%s\n", specificMessage);
     printf("Please try again later: ");
 }
@@ -79,29 +82,37 @@ void interfaceShowPeriod(const Tree tree) {
         printErrorTreeMessages(messageBuffer);
     }
 }
+
 int numberOfDaysInMonth(int month) {
     if (month == 2)
         return 29;
     if (month <= 7)
-        return 30+month%2;
-    else
-        return 31-month%2;
+        return 30 + month % 2;
+    return 31 - month % 2;
 }
 
-int getUserValideDate(){
-    int month,day;
-    month=getUserNumber("\nenter the number of your month: ");
-    while (month < 1 || month > 12) {
-        printErrorTreeMessages("\nIncorrect month number entered");
-        month=getUserNumber("\nenter the number of your month: ");
-    }
-    day=getUserNumber("\nenter the number of your day: ");
-    while (day < 1 || day > numberOfDaysInMonth(month)) {
-        printErrorTreeMessages("\nIncorrect day number entered");
-        day=getUserNumber("\nenter the number of your day: ");
-    }
-    return month*100+day;
+int getUserValideDate() {
+    int month, day;
+
+    do {
+        month = getUserNumber("enter the number of your month:");
+
+        if (month >= 1 && month <= 12) break;
+
+        printErrorTreeMessages("Incorrect month number entered");
+    } while (1);
+
+    do {
+        day = getUserNumber("enter the number of your day:");
+
+        if (day >= 1 && day <= numberOfDaysInMonth(month)) break;
+
+        printErrorTreeMessages("Incorrect day number entered");
+    } while (1);
+
+    return month * 100 + day;
 }
+
 // void interfaceAddreservation(const Tree tree) {
 //     int id=20;
 //     Interval *i = malloc(sizeof(Interval));
@@ -110,49 +121,54 @@ int getUserValideDate(){
 //     char description[50]="pppppppppppppppp";
 //     addReservation(tree, id, i, &description);
 // }
-int searchId(Tree tree,int id) {
-    if(tree==NULL)
+int searchId(Tree tree, int id) {
+    if (tree == NULL)
         return 0;
-    if(tree->id==id)
+    if (tree->id == id)
         return 1;
-    return searchId(tree->left,id) || searchId(tree->right,id);
+    return searchId(tree->left, id) || searchId(tree->right, id);
 }
 
 int getIdUnique(const Tree tree) {
-    if(tree) {
-        int id = getUserNumber("\nWhich id reservation you want to add ?: ");
-        while (searchId(tree, id)==1) {
-            printErrorTreeMessages("\n this Id already exist ");
-            id = getUserNumber("\nWhich id reservation you want to add ?: ");
+    if (tree) {
+        int id = getUserNumber("Which id reservation you want to add ?: ");
+        while (searchId(tree, id) == 1) {
+            printErrorTreeMessages("\nthis Id already exist\n");
+            id = getUserNumber("Which id reservation you want to add ?: ");
         }
         return id;
     }
 }
+
 void interfaceAddreservation(const Tree tree) {
     int id = getIdUnique(tree);
-    Interval *interval=malloc(sizeof(Interval));
-    char *description;
-    printf("\n******** start date");
+    Interval *interval = malloc(sizeof(Interval));
+
+    printf("\n******** start date\n");
     interval->start = getUserValideDate();
-    printf("\n******** end date");
+
+    printf("\n******** end date\n");
     interval->end = getUserValideDate();
-    while (comparatorDate(interval->end, interval->start)!=1) {
-        printErrorTreeMessages("\n end must be after start");
+
+    while (comparatorDate(interval->end, interval->start) != 1) {
+        printErrorTreeMessages("Start date must begin before end date !");
         interval->end = getUserValideDate();
     }
-    description= getUserString("\nDescription reservation you want to add : ");
+
+    char *description = getUserString("\nDescription reservation you want to add:");
     addReservation(tree, id, interval, description);
 }
+
 void interfaceUpdateReservation(const Tree tree) {
     int id = getUserNumber("\nWhich id reservation you want to update ?: ");
-    Interval *current=malloc(sizeof(Interval));
-    Interval *newInterval=malloc(sizeof(Interval));
+    Interval *current = malloc(sizeof(Interval));
+    Interval *newInterval = malloc(sizeof(Interval));
 
     printf("\n******** start date of current interval");
     current->start = getUserValideDate();
     printf("\n******** end date of current interval");
     current->end = getUserValideDate();
-    while (comparatorDate(current->end, current->start)!=1) {
+    while (comparatorDate(current->end, current->start) != 1) {
         printErrorTreeMessages("\n end must be after start");
         current->end = getUserValideDate();
     }
@@ -161,7 +177,7 @@ void interfaceUpdateReservation(const Tree tree) {
     newInterval->start = getUserValideDate();
     printf("\n******** end date of newI interval");
     newInterval->end = getUserValideDate();
-    while (comparatorDate(newInterval->end, newInterval->start)!=1) {
+    while (comparatorDate(newInterval->end, newInterval->start) != 1) {
         printErrorTreeMessages("\n end must be after start");
         newInterval->end = getUserValideDate();
     }
@@ -177,14 +193,14 @@ void interfaceUpdateReservation(const Tree tree) {
 //     deleteReservation(tree, i, id);
 // }
 
- void interfaceDeletereservaion(const Tree tree) {
-    int id=getUserNumber("\nWhich id reservation you want to delete ?: ");
-    Interval *current=malloc(sizeof(Interval));
+void interfaceDeletereservaion(const Tree tree) {
+    int id = getUserNumber("Which id reservation you want to delete ?: ");
+    Interval *current = malloc(sizeof(Interval));
     printf("\n******** start date of current interval");
     current->start = getUserValideDate();
     printf("\n******** end date of current interval");
     current->end = getUserValideDate();
-    while (comparatorDate(current->end, current->start)!=1) {
+    while (comparatorDate(current->end, current->start) != 1) {
         printErrorTreeMessages("\n end must be after start");
         current->end = getUserValideDate();
     }
@@ -192,31 +208,29 @@ void interfaceUpdateReservation(const Tree tree) {
 }
 
 void interfaceSearchReservation(const Tree tree) {
-    int id=getUserNumber("\nWhich id reservation you want to search?: ");
+    int id = getUserNumber("\nWhich id reservation you want to search?: ");
     Interval current;
     printf("\n******** start date of current interval");
     current.start = getUserValideDate();
     printf("\n******** end date of current interval");
     current.end = getUserValideDate();
-    while (comparatorDate(current.end, current.start)!=1) {
+    while (comparatorDate(current.end, current.start) != 1) {
         printErrorTreeMessages("\n end must be after start");
         current.end = getUserValideDate();
     }
-    Node *node=searchReservation( tree, &current, id);
+    Node *node = searchReservation(tree, &current, id);
 
-    if(node) {
+    if (node) {
         char *startDate = getParsedDate(node->interval->start);
         char *endDate = getParsedDate(node->interval->end);
 
         printf("\n--------> votre reservation <-----------");
         printf("\n id: %d", node->id);
-        printf("\nstart date :%s",startDate);
-        printf("\nend date :%s",endDate);
+        printf("\nstart date :%s", startDate);
+        printf("\nend date :%s", endDate);
         printf("\ndescription: %s", node->description);
         printf("\n----------------------------------------\n");
-    }
-    else {
+    } else {
         printErrorTreeMessages("\n votre reservation not found");
     }
-
 }

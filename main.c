@@ -114,7 +114,6 @@ int main() {
                 break;
             case '4':
                 interfaceAddreservation(tree);
-                //interfaceShowPeriod(tree); c'est quoi cette fonction ?
                 break;
             case '5':
                 interfaceUpdateReservation(tree);
@@ -124,7 +123,7 @@ int main() {
                 break;
             case '7':
                 interfaceSearchReservation(tree);
-            break;
+                break;
             case '8':
                 printf("\n======== PROGRAM FINISHED ========\n");
                 break;
