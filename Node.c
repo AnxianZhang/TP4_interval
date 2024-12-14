@@ -10,10 +10,10 @@
 #include "Interval.h"
 
 /*
- *NB a et b sont des dates
- * comparatorDate retoune 1 si a est a droite de b
- *                     0 si a est a gauche d eb
- *                    -1 si les deux dates sont pareille
+* * retoune:
+ *  1 si a est a droite de b
+ *  0 si a est a gauche de b
+ *  -1 si les deux dates sont pareille
  */
 int comparatorDate(unsigned int a, unsigned int b) {
     if (a / 100 > b / 100)
@@ -57,6 +57,36 @@ Node *searchReservation(const Tree tree, Interval *interval, unsigned int id) {
     return NULL;
 }
 
+Node *createNode(unsigned int id, char *description, Interval *interval) {
+    if (!interval) return NULL;
+
+    Node *n = malloc(sizeof(Node));
+    if (!n) return NULL;
+
+    n->id = id;
+    n->description = malloc(sizeof(char) * strlen(description));
+
+    if (!n->description) {
+        free(n);
+        return NULL;
+    }
+
+    strcpy(n->description, description);
+    n->interval = interval;
+    n->left = NULL;
+    n->right = NULL;
+
+    return n;
+}
+
+// Tree createEmptyTree() {
+//     Tree tree = malloc(sizeof(Tree));
+//     if (!tree) return NULL;
+//
+//     tree->id = 0;
+//     tree->description =
+// }
+
 int addReservation(Tree tree, unsigned int id, Interval *interval, char *description) {
     Node *test_node = searchReservation(tree, interval, id);
     int add;
@@ -68,12 +98,9 @@ int addReservation(Tree tree, unsigned int id, Interval *interval, char *descrip
         Node *q = tree;
         while (p) {
             q = p;
-
-            int flag = comparatorDate(p->interval->start, interval->end);
-
-            if (flag == 1)
+            if (comparatorDate(p->interval->start, interval->end) == 1)
                 p = p->left;
-            else if (flag == 0)
+            else if (comparatorDate(p->interval->end, interval->start) == 0)
                 p = p->right;
             else {
                 test = 1;
@@ -235,28 +262,6 @@ char *getParsedDate(unsigned int date) {
     return formatedDate;
 }
 
-Node *createNode(unsigned int id, char *description, Interval *interval) {
-    if (!interval) return NULL;
-
-    Node *n = malloc(sizeof(Node));
-    if (!n) return NULL;
-
-    n->id = id;
-    n->description = malloc(sizeof(char) * strlen(description));
-
-    if (!n->description) {
-        free(n);
-        return NULL;
-    }
-
-    strcpy(n->description, description);
-    n->interval = interval;
-    n->left = NULL;
-    n->right = NULL;
-
-    return n;
-}
-
 void showTree(const Tree tree) {
     if (!tree) return;
     showTree(tree->left);
@@ -264,11 +269,7 @@ void showTree(const Tree tree) {
     char *startDate = getParsedDate(tree->interval->start);
     char *endDate = getParsedDate(tree->interval->end);
 
-    printf("%d ", tree->interval->start);
-    printf("%d ", tree->interval->end);
-
-
-    printf("%s to %s : company %d - %s \n", startDate, endDate, tree->id, tree->description);
+    printf("%s to %s : company %-3d - %s \n", startDate, endDate, tree->id, tree->description);
 
     free(startDate);
     free(endDate);
@@ -311,7 +312,7 @@ int showCompany(const Tree tree, unsigned int id) {
         char *startDate = getParsedDate(tree->interval->start);
         char *endDate = getParsedDate(tree->interval->end);
 
-        printf("%s to %s : company %d - %s \n", startDate, endDate, tree->id, tree->description);
+        printf("%s to %s : company %-3d - %s \n", startDate, endDate, tree->id, tree->description);
 
         free(startDate);
         free(endDate);
@@ -327,25 +328,25 @@ int showCompany(const Tree tree, unsigned int id) {
 int showPeriod(const Tree tree, const Interval *period) {
     if (!tree) return 0;
 
-    int flag = 0;
 
-    showPeriod(tree->left, period);
+    int leftFlag = showPeriod(tree->left, period);
+    int currentFlag = 0;
 
     if ((tree->interval->start >= period->start && tree->interval->start <= period->end) ||
         (tree->interval->end >= period->start && tree->interval->end <= period->end)) {
         char *startDate = getParsedDate(tree->interval->start);
         char *endDate = getParsedDate(tree->interval->end);
 
-        printf("%s to %s : company %d - %s \n", startDate, endDate, tree->id, tree->description);
+        printf("%s to %s : company %-3d - %s \n", startDate, endDate, tree->id, tree->description);
 
         free(startDate);
         free(endDate);
 
-        flag = 1;
+        currentFlag = 1;
     }
 
-    showPeriod(tree->right, period);
-    return flag;
+    int rightFlag = showPeriod(tree->right, period);
+    return currentFlag || leftFlag || rightFlag;
 }
 
 void deleteAll(Tree tree) {
