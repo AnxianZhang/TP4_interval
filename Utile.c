@@ -15,7 +15,7 @@ void emptyBuffer() {
 }
 
 int getUserNumber(const char *message) {
-    unsigned int number = 0;
+    int number = 0;
 
     printf("%s", message);
     scanf("%d", &number);
