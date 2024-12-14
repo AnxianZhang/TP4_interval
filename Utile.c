@@ -25,19 +25,22 @@ int getUserNumber(const char *message) {
 }
 
 char *getUserString(const char *message) {
-
-
-    char *chaine = (char *)malloc(100 * sizeof(char));
-    if (chaine == NULL) {
-        printf("Erreur d'allocation mémoire.\n");
-        exit(1);  // exit the program
+    char *buffer = (char *) malloc(100 * sizeof(char));
+    if (buffer == NULL) {
+        printf("ERROR IN MALLOC.\n");
+        exit(1); // exit the program
     }
 
     printf("%s", message);
-    fgets(chaine, 1000, stdin);
+    fgets(buffer, 100, stdin);
+
+    unsigned int size = strlen(buffer);
+
+    if (size > 0 && buffer[size - 1] == '\n') {
+        buffer[size - 1] = '\0';
+    }
 
     emptyBuffer();
 
-    return chaine;
+    return buffer;
 }
-
