@@ -5,8 +5,12 @@
 #ifndef UTILE_H
 #define UTILE_H
 
+#define MAX_BUFFER_SIZE 255
+
 void emptyBuffer();
+
 int getUserNumber(const char *message);
+
 char *getUserString(const char *message);
 
 #endif //UTILE_H

@@ -7,8 +7,6 @@
 #include <string.h>
 #include <stdio.h>
 
-#define MAX_BUFFER_SIZE 255
-
 void emptyBuffer() {
     char c = ' ';
     while (c != '\n' && c != EOF) {

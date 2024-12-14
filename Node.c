@@ -304,10 +304,9 @@ int isIntervalContainingReservation(const Tree tree, const Interval *period) {
 int showCompany(const Tree tree, unsigned int id) {
     if (!tree) return 0;
 
-    int flag = 0;
+    int leftFlag = showCompany(tree->left, id);
 
-    showCompany(tree->left, id);
-
+    int currentFlag = 0;
     if (tree->id == id) {
         char *startDate = getParsedDate(tree->interval->start);
         char *endDate = getParsedDate(tree->interval->end);
@@ -317,11 +316,12 @@ int showCompany(const Tree tree, unsigned int id) {
         free(startDate);
         free(endDate);
 
-        flag = 1;
+        currentFlag = 1;
     }
 
-    showCompany(tree->right, id);
-    return flag;
+    int rightFlag = showCompany(tree->right, id);
+
+    return leftFlag || currentFlag || rightFlag;
 }
 
 int showPeriod(const Tree tree, const Interval *period) {

@@ -4,7 +4,6 @@
 
 #include "Interfaces.h"
 
-#include <stdbool.h>
 #include <stdio.h>
 
 #include <stdlib.h>
@@ -52,9 +51,9 @@ void interfaceShowCompany(const Tree tree) {
     }
 
     if (!showCompany(tree, id)) {
-        char messageBuffer[BUFFER_MAX_SIZE + 1] = {""};
+        char messageBuffer[MAX_BUFFER_SIZE + 1] = {""};
 
-        snprintf(messageBuffer, BUFFER_MAX_SIZE + 1, "The company number %d haven't make reservation !", id);
+        snprintf(messageBuffer, MAX_BUFFER_SIZE + 1, "The company number %d haven't make reservation !", id);
         printErrorTreeMessages(messageBuffer);
     }
 }
@@ -72,10 +71,10 @@ void interfaceShowPeriod(const Tree tree) {
     if (!showPeriod(tree, &i)) {
         char *startDateBuffer = getParsedDate(i.start);
         char *endDateBuffer = getParsedDate(i.end);
-        char messageBuffer[BUFFER_MAX_SIZE + 1] = {""};
+        char messageBuffer[MAX_BUFFER_SIZE + 1] = {""};
 
         snprintf(
-            messageBuffer,BUFFER_MAX_SIZE + 1,
+            messageBuffer,MAX_BUFFER_SIZE + 1,
             "There are no reservation in the period of %s to %s !",
             startDateBuffer, endDateBuffer
         );
