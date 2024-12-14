@@ -7,6 +7,8 @@
 #include <string.h>
 #include <stdio.h>
 
+#define MAX_BUFFER_SIZE 255
+
 void emptyBuffer() {
     char c = ' ';
     while (c != '\n' && c != EOF) {
@@ -25,14 +27,14 @@ int getUserNumber(const char *message) {
 }
 
 char *getUserString(const char *message) {
-    char *buffer = (char *) malloc(100 * sizeof(char));
+    char *buffer = (char *) malloc(MAX_BUFFER_SIZE * sizeof(char));
     if (buffer == NULL) {
         printf("ERROR IN MALLOC.\n");
         exit(1); // exit the program
     }
 
     printf("%s", message);
-    fgets(buffer, 100, stdin);
+    fgets(buffer, MAX_BUFFER_SIZE, stdin);
 
     unsigned int size = strlen(buffer);
 
