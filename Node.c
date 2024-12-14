@@ -50,12 +50,12 @@ Node *searchReservation(const Tree tree, Interval *interval, unsigned int id) {
             node = node->left;
         else if (comparatorDate(node->interval->end, interval->start) == 0)
             node = node->right;
-        else return NULL;;
+        else
+            return NULL;
     }
-    if(comparatorInteval(node->interval,interval)==-1)
+    if(node &&           comparatorInteval(node->interval,interval)==-1)
         return node;
-    else
-        return NULL;
+    return NULL;
 }
 
 void addReservation(Tree tree, unsigned int id, Interval *interval, char *description) {
@@ -86,12 +86,16 @@ void addReservation(Tree tree, unsigned int id, Interval *interval, char *descri
         }
     } else
         printf("resavation unavailable \n");
+
+
 }
 
 void *father(Tree tree, Node *node) {
     if (tree && node) {
         Node *p = tree;
         Node *q = tree;
+        if(p==node)
+            return NULL;
         int test = 1;
         while (p != node) {
             q = p;
@@ -136,30 +140,44 @@ void deleteReservation(Tree tree, Interval *interval, unsigned int id) {
     if (tree && interval) {
         Node *node = searchReservation(tree, interval, id);
         Node *p = father(tree, node);
-        if (!node->left && !node->right) {
-            if (p->left == node)
-                p->left = NULL;
-            if (p->right == node)
-                p->right = NULL;
-            free(node);
-        } else if (node->left) {
-            if (p->left == node)
-                p->left = node->left;
-            if (p->right == node)
-                p->right = node->left;
-            free(node);
-        } else if (node->right) {
-            if (p->left == node)
-                p->left = node->right;
-            if (p->right == node)
-                p->right = node->right;
-            free(node);
-        } else {
-            p = successor(tree, node);
-            node->description = p->description;
-            node->id = p->id;
-            node->interval = p->interval;
-            deleteReservation(tree, p->interval, p->id);
+        if(p){
+            if (!node->left && !node->right) {
+                if (p->left == node)
+                    p->left = NULL;
+                if (p->right == node)
+                    p->right = NULL;
+                free(node);
+            } else if (!node->right && node->left) {
+                if (p->left == node)
+                    p->left = node->left;
+                if (p->right == node)
+                    p->right = node->left;
+                free(node);
+            } else if (!node->left && node->right) {
+                if (p->left == node)
+                    p->left = node->right;
+                if (p->right == node)
+                    p->right = node->right;
+                free(node);
+            } else {
+                Node *suc = successor(tree, node);
+                node->description = suc->description;
+                node->id = suc->id;
+                node->interval = suc->interval;
+                deleteReservation(tree, &(suc->interval), suc->id);
+            }
+        }
+        else {
+            if(!node->left && !node->right)
+                free(node);
+            else {
+                Node *suc = successor(tree, node);
+                node->description = suc->description;
+                node->id = suc->id;
+                node->interval = suc->interval;
+                deleteReservation(tree, &(suc->interval), suc->id);
+            }
+
         }
     }
 }
@@ -229,6 +247,10 @@ void showTree(const Tree tree) {
 
     char *startDate = getParsedDate(tree->interval->start);
     char *endDate = getParsedDate(tree->interval->end);
+
+    printf("%d ", tree->interval->start);
+    printf("%d ", tree->interval->end);
+
 
     printf("%s to %s : company %d - %s \n", startDate, endDate, tree->id, tree->description);
 
