@@ -77,7 +77,7 @@ int main() {
 
     Interval *i5 = malloc(sizeof(Interval));
     i5->start = 220;
-    i5->end = 328;
+    i5->end = 224;
 
     Tree tree = createNode(1, "J'aime les pommes au cafe", i);
     tree->right = createNode(11, "pomme ?", i2);
@@ -88,58 +88,55 @@ int main() {
 
     char choice = ' ';
 
-    // while (choice != '8') {
-    //     printf("#################### MENU ####################\n");
-    //     printf("| 1. Show all reservations\n");
-    //     printf("| 2. Show all reservations of a company\n");
-    //     printf("| 3. Show all reservations of within a period\n");
-    //     printf("| 4. Add a reservation\n");
-    //     printf("| 5. Update a reservation\n");
-    //     printf("| 6. Delete a reservation\n");
-    //     printf("| 7. search a reservation\n");
-    //     printf("| 8. Leave\n");
-    //     printf("##############################################\n");
-    //
-    //     choice = getUserNumber("Enter your choice:") + '0'; // convert to char
-    //
-    //     switch (choice) {
-    //         case '1':
-    //             interfaceShowTree(tree);
-    //             break;
-    //         case '2':
-    //             interfaceShowCompany(tree);
-    //             break;
-    //         case '3':
-    //             interfaceShowPeriod(tree);
-    //             break;
-    //         case '4':
-    //             interfaceAddreservation(tree);
-    //             //interfaceShowPeriod(tree); c'est quoi cette fonction ?
-    //             break;
-    //         case '5':
-    //             interfaceUpdateReservation(tree);
-    //             break;
-    //         case '6':
-    //             interfaceDeletereservaion(tree);
-    //             break;
-    //         case '7':
-    //             interfaceSearchReservation(tree);
-    //         break;
-    //         case '8':
-    //             printf("\n======== PROGRAM FINISHED ========\n");
-    //             break;
-    //         default:
-    //             printf("\n\nERROR : INVALID CHOICE ! ");
-    //     }
-    //
-    //     emptyBuffer();
-    //     printf("\n\n\n");
-    // }
-    interfaceShowTree(tree);
+    while (choice != '8') {
+        printf("#################### MENU ####################\n");
+        printf("| 1. Show all reservations\n");
+        printf("| 2. Show all reservations of a company\n");
+        printf("| 3. Show all reservations of within a period\n");
+        printf("| 4. Add a reservation\n");
+        printf("| 5. Update a reservation\n");
+        printf("| 6. Delete a reservation\n");
+        printf("| 7. search a reservation\n");
+        printf("| 8. Leave\n");
+        printf("##############################################\n");
+
+        choice = getUserNumber("Enter your choice:") + '0'; // convert to char
+
+        switch (choice) {
+            case '1':
+                interfaceShowTree(tree);
+                break;
+            case '2':
+                interfaceShowCompany(tree);
+                break;
+            case '3':
+                interfaceShowPeriod(tree);
+                break;
+            case '4':
+                interfaceAddreservation(tree);
+                //interfaceShowPeriod(tree); c'est quoi cette fonction ?
+                break;
+            case '5':
+                interfaceUpdateReservation(tree);
+                break;
+            case '6':
+                interfaceDeletereservaion(tree);
+                break;
+            case '7':
+                interfaceSearchReservation(tree);
+            break;
+            case '8':
+                printf("\n======== PROGRAM FINISHED ========\n");
+                break;
+            default:
+                printf("\n\nERROR : INVALID CHOICE ! ");
+        }
+
+        emptyBuffer();
+        printf("\n\n\n");
+    }
+
     printf("\n");
-    interfaceDeletereservaion(tree);
-    printf("\n");
-    interfaceShowTree(tree);
 
     deleteAll(tree);
     tree = NULL;

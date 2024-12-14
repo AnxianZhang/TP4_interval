@@ -19,7 +19,7 @@ typedef Node *Tree;
 
 Node *createNode(unsigned int id, char *description, Interval *interval);
 
-void addReservation(Tree tree, unsigned int id, Interval *interval, char *description);
+int addReservation(Tree tree, unsigned int id, Interval *interval, char *description);
 
 Node *searchReservation(const Tree tree,  Interval *interval, unsigned int id);
 

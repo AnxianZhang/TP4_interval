@@ -9,6 +9,8 @@
 
 #define BUFFER_MAX_SIZE 255
 
+void printErrorTreeMessages(const char *specificMessage);
+
 void interfaceShowTree(const Tree tree);
 
 void interfaceShowCompany(const Tree tree);

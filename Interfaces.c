@@ -110,9 +110,26 @@ int getUserValideDate(){
 //     char description[50]="pppppppppppppppp";
 //     addReservation(tree, id, i, &description);
 // }
+int searchId(Tree tree,int id) {
+    if(tree==NULL)
+        return 0;
+    if(tree->id==id)
+        return 1;
+    return searchId(tree->left,id) || searchId(tree->right,id);
+}
 
+int getIdUnique(const Tree tree) {
+    if(tree) {
+        int id = getUserNumber("\nWhich id reservation you want to add ?: ");
+        while (searchId(tree, id)==1) {
+            printErrorTreeMessages("\n this Id already exist ");
+            id = getUserNumber("\nWhich id reservation you want to add ?: ");
+        }
+        return id;
+    }
+}
 void interfaceAddreservation(const Tree tree) {
-    int id = getUserNumber("\nWhich id reservation you want to add ?: ");
+    int id = getIdUnique(tree);
     Interval *interval=malloc(sizeof(Interval));
     char *description;
     printf("\n******** start date");
@@ -128,50 +145,51 @@ void interfaceAddreservation(const Tree tree) {
 }
 void interfaceUpdateReservation(const Tree tree) {
     int id = getUserNumber("\nWhich id reservation you want to update ?: ");
-    Interval current, newInterval;
+    Interval *current=malloc(sizeof(Interval));
+    Interval *newInterval=malloc(sizeof(Interval));
 
     printf("\n******** start date of current interval");
-    current.start = getUserValideDate();
+    current->start = getUserValideDate();
     printf("\n******** end date of current interval");
-    current.end = getUserValideDate();
-    while (comparatorDate(current.end, current.start)!=1) {
+    current->end = getUserValideDate();
+    while (comparatorDate(current->end, current->start)!=1) {
         printErrorTreeMessages("\n end must be after start");
-        current.end = getUserValideDate();
+        current->end = getUserValideDate();
     }
 
     printf("\n******** start date of new interval");
-    newInterval.start = getUserValideDate();
+    newInterval->start = getUserValideDate();
     printf("\n******** end date of newI interval");
-    newInterval.end = getUserValideDate();
-    while (comparatorDate(newInterval.end, newInterval.start)!=1) {
+    newInterval->end = getUserValideDate();
+    while (comparatorDate(newInterval->end, newInterval->start)!=1) {
         printErrorTreeMessages("\n end must be after start");
-        newInterval.end = getUserValideDate();
+        newInterval->end = getUserValideDate();
     }
 
-    updateReservation(tree, &current, &newInterval, id);
+    updateReservation(tree, current, newInterval, id);
 }
 
-void interfaceDeletereservaion(const Tree tree) {
-    int id=1;
-    Interval *i = malloc(sizeof(Interval));
-    i->start =110;
-    i->end =214;
-    deleteReservation(tree, i, id);
-}
-
-//  void interfaceDeletereservaion(const Tree tree) {
-//     int id=getUserNumber("\nWhich id reservation you want to delete ?: ");
-//     Interval *current=malloc(sizeof(Interval));
-//     printf("\n******** start date of current interval");
-//     current->start = getUserValideDate();
-//     printf("\n******** end date of current interval");
-//     current->end = getUserValideDate();
-//     while (comparatorDate(current->end, current->start)!=1) {
-//         printErrorTreeMessages("\n end must be after start");
-//         current->end = getUserValideDate();
-//     }
-//     deleteReservation(tree, current, id);
+// void interfaceDeletereservaion(const Tree tree) {
+//     int id=1;
+//     Interval *i = malloc(sizeof(Interval));
+//     i->start =110;
+//     i->end =214;
+//     deleteReservation(tree, i, id);
 // }
+
+ void interfaceDeletereservaion(const Tree tree) {
+    int id=getUserNumber("\nWhich id reservation you want to delete ?: ");
+    Interval *current=malloc(sizeof(Interval));
+    printf("\n******** start date of current interval");
+    current->start = getUserValideDate();
+    printf("\n******** end date of current interval");
+    current->end = getUserValideDate();
+    while (comparatorDate(current->end, current->start)!=1) {
+        printErrorTreeMessages("\n end must be after start");
+        current->end = getUserValideDate();
+    }
+    deleteReservation(tree, current, id);
+}
 
 void interfaceSearchReservation(const Tree tree) {
     int id=getUserNumber("\nWhich id reservation you want to search?: ");
