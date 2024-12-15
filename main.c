@@ -80,7 +80,7 @@ int main() {
     // i5->end = 224;
 
     // =================== TEST MANUELLE ===========
-    // Tree tree = createNode(1, "J'aime les pommes au cafe", i);
+    Tree tree = createNode(1, "J'aime les pommes au cafe", i);
     // tree->right = createNode(2, "pomme ?", i2);
     // tree->right->right = createNode(3, "cafe ?", i3);
     // tree->right->left = createNode(3, "the ?", i5);
@@ -92,12 +92,12 @@ int main() {
     // period->end = 1230;
 
     // =================== TEST AVEC UNIQUEMENT AVEC LA FONCTION AJOUTE ===========
-    Tree tree = malloc(sizeof(Tree));
-    tree->left=NULL;
-    tree->right=NULL;
-    tree->interval=NULL;
-    addReservation(tree, 1, i, "J'aime les pommes au cafe");
-    interfaceSearchReservation(tree);
+    // Tree tree = malloc(sizeof(Tree));
+    // tree->left=NULL;
+    // tree->right=NULL;
+    // tree->interval=NULL;
+    // addReservation(tree, 1, i, "J'aime les pommes au cafe");
+    // interfaceSearchReservation(tree);
    // interfaceShowTree(tree);
     //
     //addReservation(tree, 11, i2, "pomme ?");
@@ -120,7 +120,6 @@ int main() {
     //
     // addReservation(tree, 13, i6, "crash test");
 
-
     // Interval *i7 = malloc(sizeof(Interval));
     // i7->start = 101;
     // i7->end = 102;
@@ -133,6 +132,8 @@ int main() {
     //showTree(tree);
     //printf("\n");
     //interfaceShowPeriod(tree);
+
+    interfaceDeletereservaion(tree);
 
     char choice = ' ';
 

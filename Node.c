@@ -42,9 +42,9 @@ int comparatorInteval(Interval *a, Interval *b) {
     return 0;
 }
 
-Node *searchReservation(const Tree tree, Interval *interval, unsigned int id) {
+Node *searchReservation(const Tree tree, Interval *interval) {
     Node *node = tree;
-    while (node && node->id != id) {
+    while (node && comparatorInteval(node->interval, interval) != -1) {
         if (comparatorDate(node->interval->start, interval->end) == 1)
             node = node->left;
         else if (comparatorDate(node->interval->end, interval->start) == 0)
@@ -52,9 +52,8 @@ Node *searchReservation(const Tree tree, Interval *interval, unsigned int id) {
         else
             return NULL;
     }
-    if (node && comparatorInteval(node->interval, interval) == -1)
-        return node;
-    return NULL;
+    return node;
+
 }
 
 Node *createNode(unsigned int id, char *description, Interval *interval) {
@@ -92,17 +91,15 @@ int addReservation(Tree tree, unsigned int id, Interval *interval, char *descrip
         // tree=NULL;
         tree->id=id;
         tree->description = malloc(sizeof(char) * strlen(description));
-
         if (!tree->description) {
             free(tree);
-            return NULL;
+            return -1;
         }
-
         strcpy(tree->description, description);
         tree->interval = interval;
         return 1;
     }
-    Node *test_node = searchReservation(tree, interval, id);
+    Node *test_node = searchReservation(tree, interval);
     int add;
 
     if (!test_node) {
@@ -184,9 +181,9 @@ Node *successor(Tree tree, Tree node) {
     }
 }
 
-void deleteReservation(Tree tree, Interval *interval, unsigned int id) {
+void deleteReservation(Tree tree, Interval *interval) {
     if (tree && interval) {
-        Node *node = searchReservation(tree, interval, id);
+        Node *node = searchReservation(tree, interval);
         if (node) {
             Node *p = father(tree, node);
             if (p) {
@@ -195,38 +192,47 @@ void deleteReservation(Tree tree, Interval *interval, unsigned int id) {
                         p->left = NULL;
                     if (p->right == node)
                         p->right = NULL;
+                    free(node->description);
+                    free(node->interval);
                     free(node);
                 } else if (!node->right && node->left) {
                     if (p->left == node)
                         p->left = node->left;
                     if (p->right == node)
                         p->right = node->left;
+                    free(node->description);
+                    free(node->interval);
                     free(node);
                 } else if (!node->left && node->right) {
                     if (p->left == node)
                         p->left = node->right;
                     if (p->right == node)
                         p->right = node->right;
+                    free(node->description);
+                    free(node->interval);
                     free(node);
                 } else {
                     Node *suc = successor(tree, node);
                     char *description = suc->description;
                     int id = suc->id;
                     Interval *i = suc->interval;
-                    deleteReservation(tree, (suc->interval), suc->id);
+                    deleteReservation(tree, (suc->interval));
                     node->description = description;
                     node->id = id;
                     node->interval = i;
                 }
             } else {
-                if (!node->left && !node->right)
+                if (!node->left && !node->right){
+                    free(node->description);
+                    free(node->interval);
                     free(node);
+                }
                 else {
                     Node *suc = successor(tree, node);
                     char *description = suc->description;
                     int id = suc->id;
                     Interval *i = suc->interval;
-                    deleteReservation(tree, (suc->interval), suc->id);
+                    deleteReservation(tree, (suc->interval));
                     node->description = description;
                     node->id = id;
                     node->interval = i;
@@ -239,10 +245,10 @@ void deleteReservation(Tree tree, Interval *interval, unsigned int id) {
 
 void updateReservation(Tree tree, Interval *current, Interval *newInterval, unsigned int id) {
     if (tree && current && newInterval) {
-        Node *node = searchReservation(tree, current, id);
+        Node *node = searchReservation(tree, current);
         if (node) {
             char *description = node->description;
-            deleteReservation(tree, node->interval, node->id);
+            deleteReservation(tree, node->interval);
             int add = addReservation(tree, id, newInterval, description);
             if (add == 0) { // if add don't work
                 free(newInterval);

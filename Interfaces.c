@@ -153,7 +153,7 @@ void interfaceShowPeriod(const Tree tree) {
 }
 
 void interfaceAddreservation(const Tree tree) {
-    int id = getIdUnique(tree);
+    int id = getUserNumber("enter your  id:  ");;
     Interval *interval = malloc(sizeof(Interval));
 
     askForInterval(interval);
@@ -163,65 +163,43 @@ void interfaceAddreservation(const Tree tree) {
 }
 
 void interfaceUpdateReservation(const Tree tree) {
-    int id = getUserNumber("Which id reservation you want to update ?:");
+
     Interval *current = malloc(sizeof(Interval));
     Interval *newInterval = malloc(sizeof(Interval));
 
     printf("\n*******> current interval");
     askForInterval(current);
 
+    int id = getUserNumber("enter your new id: ");
     printf("\n*******> new interval");
     askForInterval(newInterval);
 
     updateReservation(tree, current, newInterval, id);
 }
 
-// void interfaceDeletereservaion(const Tree tree) {
-//     int id=1;
-//     Interval *i = malloc(sizeof(Interval));
-//     i->start =110;
-//     i->end =214;
-//     deleteReservation(tree, i, id);
-// }
-
 void interfaceDeletereservaion(const Tree tree) {
-    int id = getUserNumber("Which id reservation you want to delete ?: ");
-    Interval *current = malloc(sizeof(Interval));
-
-    askForInterval(current);
-
-    deleteReservation(tree, current, id);
-}
-
-void interfaceSearchReservation(const Tree tree) {
     int id=1;
     Interval *i = malloc(sizeof(Interval));
     i->start =110;
     i->end =214;
-    Node *node = searchReservation(tree, i, id);
-
-    if (node) {
-        char *startDate = getParsedDate(node->interval->start);
-        char *endDate = getParsedDate(node->interval->end);
-
-        printf("\n--------> votre reservation <-----------");
-        printf("\n id: %d", node->id);
-        printf("\nstart date :%s", startDate);
-        printf("\nend date :%s", endDate);
-        printf("\ndescription: %s", node->description);
-        printf("\n----------------------------------------\n");
-    } else {
-        printErrorTreeMessages("\n votre reservation not found");
-    }
+    deleteReservation(tree, i);
 }
 
+// void interfaceDeletereservaion(const Tree tree) {
+//
+//     Interval *current = malloc(sizeof(Interval));
+//
+//     askForInterval(current);
+//
+//     deleteReservation(tree, current);
+// }
+
 // void interfaceSearchReservation(const Tree tree) {
-//     int id = getUserNumber("\nWhich id reservation you want to search?: ");
-//     Interval current;
-//
-//     askForInterval(&current);
-//
-//     Node *node = searchReservation(tree, &current, id);
+//     int id=1;
+//     Interval *i = malloc(sizeof(Interval));
+//     i->start =110;
+//     i->end =214;
+//     Node *node = searchReservation(tree, i, id);
 //
 //     if (node) {
 //         char *startDate = getParsedDate(node->interval->start);
@@ -237,3 +215,26 @@ void interfaceSearchReservation(const Tree tree) {
 //         printErrorTreeMessages("\n votre reservation not found");
 //     }
 // }
+
+void interfaceSearchReservation(const Tree tree) {
+
+    Interval current;
+
+    askForInterval(&current);
+
+    Node *node = searchReservation(tree, &current);
+
+    if (node) {
+        char *startDate = getParsedDate(node->interval->start);
+        char *endDate = getParsedDate(node->interval->end);
+
+        printf("\n--------> votre reservation <-----------");
+        printf("\n id: %d", node->id);
+        printf("\nstart date :%s", startDate);
+        printf("\nend date :%s", endDate);
+        printf("\ndescription: %s", node->description);
+        printf("\n----------------------------------------\n");
+    } else {
+        printErrorTreeMessages("\n votre reservation not found");
+    }
+}
