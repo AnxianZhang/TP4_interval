@@ -88,6 +88,20 @@ Node *createNode(unsigned int id, char *description, Interval *interval) {
 // }
 
 int addReservation(Tree tree, unsigned int id, Interval *interval, char *description) {
+    if(tree->interval == NULL) {
+        // tree=NULL;
+        tree->id=id;
+        tree->description = malloc(sizeof(char) * strlen(description));
+
+        if (!tree->description) {
+            free(tree);
+            return NULL;
+        }
+
+        strcpy(tree->description, description);
+        tree->interval = interval;
+        return 1;
+    }
     Node *test_node = searchReservation(tree, interval, id);
     int add;
 
@@ -230,8 +244,12 @@ void updateReservation(Tree tree, Interval *current, Interval *newInterval, unsi
             char *description = node->description;
             deleteReservation(tree, node->interval, node->id);
             int add = addReservation(tree, id, newInterval, description);
-            if (add == 0) // if add don't work
+            if (add == 0) { // if add don't work
+                free(newInterval);
                 addReservation(tree, id, current, description);
+            }
+            else
+                free(current);
         } else
             printf("resavation unavailable \n");
     }
