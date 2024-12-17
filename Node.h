@@ -19,13 +19,13 @@ typedef Node *Tree;
 
 Node *createNode(unsigned int id, char *description, Interval *interval);
 
-int addReservation(Tree tree, unsigned int id, Interval *interval, char *description);
+int addReservation(Tree *tree, unsigned int id, Interval *interval, char *description);
 
-Node *searchReservation(const Tree tree, Interval *interval);
+Node *searchReservation( Tree tree, Interval *interval);
 
-void deleteReservation(Tree tree, Interval *interval);
+void deleteReservation(Tree *tree, Interval *interval);
 
-void updateReservation(Tree tree, Interval *current, Interval *newInterval, unsigned int id);
+void updateReservation(Tree *tree, Interval *current, Interval *newInterval, int id , char *description);
 
 char *getParsedDate(unsigned int date);
 

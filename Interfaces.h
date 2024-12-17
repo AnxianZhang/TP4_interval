@@ -15,11 +15,11 @@ void interfaceShowCompany(const Tree tree);
 
 void interfaceShowPeriod(const Tree tree);
 
-void interfaceAddreservation(const Tree tree);
+void interfaceAddreservation(Tree *tree);
 
-void interfaceUpdateReservation(const Tree tree);
+void interfaceUpdateReservation( Tree *tree);
 
-void interfaceDeletereservaion(const Tree tree);
+void interfaceDeletereservaion(Tree* tree);
 
 void interfaceSearchReservation(const Tree tree);
 #endif //INTERFACES_H

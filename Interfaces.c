@@ -152,7 +152,7 @@ void interfaceShowPeriod(const Tree tree) {
     }
 }
 
-void interfaceAddreservation(const Tree tree) {
+void interfaceAddreservation(Tree *tree) {
     int id = getUserNumber("enter your  id:  ");;
     Interval *interval = malloc(sizeof(Interval));
 
@@ -162,7 +162,7 @@ void interfaceAddreservation(const Tree tree) {
     addReservation(tree, id, interval, description);
 }
 
-void interfaceUpdateReservation(const Tree tree) {
+void interfaceUpdateReservation(Tree *tree) {
 
     Interval *current = malloc(sizeof(Interval));
     Interval *newInterval = malloc(sizeof(Interval));
@@ -170,29 +170,31 @@ void interfaceUpdateReservation(const Tree tree) {
     printf("\n*******> current interval");
     askForInterval(current);
 
-    int id = getUserNumber("enter your new id: ");
+    printf("\n*******><***************");
+    int id = getUserNumber("\n enter your new id: ");
+    char *description=getUserString("\n enter your new description: ");
     printf("\n*******> new interval");
     askForInterval(newInterval);
 
-    updateReservation(tree, current, newInterval, id);
+    updateReservation(tree, current, newInterval, id ,description);
 }
 
-void interfaceDeletereservaion(const Tree tree) {
-    int id=1;
-    Interval *i = malloc(sizeof(Interval));
-    i->start =110;
-    i->end =214;
-    deleteReservation(tree, i);
-}
-
-// void interfaceDeletereservaion(const Tree tree) {
-//
-//     Interval *current = malloc(sizeof(Interval));
-//
-//     askForInterval(current);
-//
-//     deleteReservation(tree, current);
+// void interfaceDeletereservaion(Tree *tree) {
+//     int id=1;
+//     Interval *i = malloc(sizeof(Interval));
+//     i->start =110;
+//     i->end =214;
+//     deleteReservation(tree, i);
 // }
+
+void interfaceDeletereservaion(Tree *tree) {
+
+    Interval *current = malloc(sizeof(Interval));
+
+    askForInterval(current);
+
+    deleteReservation(tree, current);
+}
 
 // void interfaceSearchReservation(const Tree tree) {
 //     int id=1;
