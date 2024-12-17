@@ -38,33 +38,18 @@ int numberOfDaysInMonth(int month) {
     return 31 - month % 2;
 }
 
-int getIdUnique(const Tree tree) {
-    if (tree) {
-        int id = getUserNumber("Which id reservation you want to add ?: ");
-        while (searchId(tree, id) == 1) {
-            printErrorTreeMessages("\nthis Id already exist\n");
-            id = getUserNumber("Which id reservation you want to add ?: ");
-        }
-        return id;
-    }
-}
-
 int getUserValideDate() {
     int month, day;
 
     do {
         month = getUserNumber("enter the number of your month:");
-
         if (month >= 1 && month <= 12) break;
-
         printErrorTreeMessages("Incorrect month number entered");
     } while (1);
 
     do {
         day = getUserNumber("enter the number of your day:");
-
         if (day >= 1 && day <= numberOfDaysInMonth(month)) break;
-
         printErrorTreeMessages("Incorrect day number entered");
     } while (1);
 
@@ -84,19 +69,9 @@ void askForInterval(Interval *i) {
     }
 }
 
-int hasTreeAndLeftRight(const Tree tree) {
-    return tree != NULL && tree->left != NULL && tree->right != NULL;
-}
-
 void printErrorTreeMessages(const char *specificMessage) {
     printf("%s\n", specificMessage);
     printf("Please try again\n\n");
-}
-
-void printErrorMessages(const char *specificMessage) {
-    // it's for bryan
-    printf("%s\n", specificMessage);
-    printf("Please try again later: ");
 }
 
 void printEmptyTreeMessages() {
@@ -104,52 +79,53 @@ void printEmptyTreeMessages() {
 }
 
 void interfaceShowTree(const Tree tree) {
-    if (!hasTreeAndLeftRight(tree)) {
+    if (!tree) {
         printEmptyTreeMessages();
         return;
     }
-    printf("The reservations are:\n");
+    printf("---------------------> ALL RESERVATIONS <---------------------\n");
     showTree(tree);
+    printf("--------------------------------------------------------------\n");
 }
 
 void interfaceShowCompany(const Tree tree) {
     unsigned int id = getUserNumber("Which company reservation you want to show ?");
 
-    if (!hasTreeAndLeftRight(tree)) {
+    if (!tree) {
         printEmptyTreeMessages();
         return;
     }
 
-    if (!showCompany(tree, id)) {
-        char messageBuffer[MAX_BUFFER_SIZE + 1] = {""};
+    printf("---------------------> ALL RESERVATIONS FOR THE %d COMPANY<---------------------\n", id);
 
-        snprintf(messageBuffer, MAX_BUFFER_SIZE + 1, "The company number %d haven't make reservation !", id);
-        printErrorTreeMessages(messageBuffer);
-    }
+    if (!showCompany(tree, id))
+        printErrorTreeMessages("This company haven't make a reservation yet !");
+
+    printf("------------------------------------------------------------------------------\n");
 }
 
 void interfaceShowPeriod(const Tree tree) {
     Interval i;
-
     askForInterval(&i);
 
-    if (!hasTreeAndLeftRight(tree)) {
+    if (!tree) {
         printEmptyTreeMessages();
         return;
     }
 
-    if (!showPeriod(tree, &i)) {
-        char *startDateBuffer = getParsedDate(i.start);
-        char *endDateBuffer = getParsedDate(i.end);
-        char messageBuffer[MAX_BUFFER_SIZE + 1] = {""};
+    char *startDateBuffer = getParsedDate(i.start);
+    char *endDateBuffer = getParsedDate(i.end);
 
-        snprintf(
-            messageBuffer,MAX_BUFFER_SIZE + 1,
-            "There are no reservation in the period of %s to %s !",
-            startDateBuffer, endDateBuffer
-        );
-        printErrorTreeMessages(messageBuffer);
-    }
+    printf(
+        "---------------------> ALL RESERVATIONS WITHIN %s AND %s <---------------------\n",
+        startDateBuffer,
+        endDateBuffer
+    );
+
+    if (!showPeriod(tree, &i))
+        printErrorTreeMessages("There are no reservation in this period !");
+
+    printf("------------------------------------------------------------------------\n");
 }
 
 void interfaceAddreservation(Tree *tree) {
@@ -163,20 +139,20 @@ void interfaceAddreservation(Tree *tree) {
 }
 
 void interfaceUpdateReservation(Tree *tree) {
-
     Interval *current = malloc(sizeof(Interval));
     Interval *newInterval = malloc(sizeof(Interval));
 
     printf("\n*******> current interval");
     askForInterval(current);
 
-    printf("\n*******><***************");
+    printf("\n***************><***************");
     int id = getUserNumber("\n enter your new id: ");
-    char *description=getUserString("\n enter your new description: ");
+    char *description = getUserString("\n enter your new description: ");
+
     printf("\n*******> new interval");
     askForInterval(newInterval);
 
-    updateReservation(tree, current, newInterval, id ,description);
+    updateReservation(tree, current, newInterval, id, description);
 }
 
 // void interfaceDeletereservaion(Tree *tree) {
@@ -188,7 +164,6 @@ void interfaceUpdateReservation(Tree *tree) {
 // }
 
 void interfaceDeletereservaion(Tree *tree) {
-
     Interval *current = malloc(sizeof(Interval));
 
     askForInterval(current);
@@ -219,7 +194,6 @@ void interfaceDeletereservaion(Tree *tree) {
 // }
 
 void interfaceSearchReservation(const Tree tree) {
-
     Interval current;
 
     askForInterval(&current);
@@ -230,13 +204,16 @@ void interfaceSearchReservation(const Tree tree) {
         char *startDate = getParsedDate(node->interval->start);
         char *endDate = getParsedDate(node->interval->end);
 
-        printf("\n--------> votre reservation <-----------");
-        printf("\n id: %d", node->id);
-        printf("\nstart date :%s", startDate);
-        printf("\nend date :%s", endDate);
+        printf("\n-----------> THE RESERVATION <-----------");
+        printf("\nid: %d", node->id);
+        printf("\nstart date: %s", startDate);
+        printf("\nend date: %s", endDate);
         printf("\ndescription: %s", node->description);
-        printf("\n----------------------------------------\n");
+        printf("\n-----------------------------------------\n");
+
+        free(startDate);
+        free(endDate);
     } else {
-        printErrorTreeMessages("\n votre reservation not found");
+        printErrorTreeMessages("\n THE RESERVATION DOESN'T EXIST !");
     }
 }

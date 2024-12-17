@@ -55,7 +55,6 @@ Node *searchReservation(const Tree tree, Interval *interval) {
             return NULL;
     }
     return node;
-
 }
 
 Node *createNode(unsigned int id, char *description, Interval *interval) {
@@ -89,7 +88,7 @@ Node *createNode(unsigned int id, char *description, Interval *interval) {
 // }
 
 int addReservation(Tree *tree, unsigned int id, Interval *interval, char *description) {
-    if(*tree == NULL) {
+    if (*tree == NULL) {
         *tree = createNode(id, description, interval);
         // tree=NULL;
         // tree->id=id;
@@ -184,7 +183,7 @@ Node *successor(Tree tree, Tree node) {
     }
 }
 
-void deleteReservation(Tree* tree, Interval *interval) {
+void deleteReservation(Tree *tree, Interval *interval) {
     if (tree && interval) {
         Node *node = searchReservation(*tree, interval);
         if (node) {
@@ -225,15 +224,13 @@ void deleteReservation(Tree* tree, Interval *interval) {
                     node->interval = i;
                 }
             } else {
-                if (!node->left && !node->right){
+                if (!node->left && !node->right) {
                     free(node->description);
                     free(node->interval);
-                    node->description=NULL;
-                    node->interval=NULL;
-                    *tree=NULL;
-
-                }
-                else {
+                    node->description = NULL;
+                    node->interval = NULL;
+                    *tree = NULL;
+                } else {
                     Node *suc = successor(*tree, node);
                     char *description = suc->description;
                     int id = suc->id;
@@ -255,11 +252,11 @@ void updateReservation(Tree *tree, Interval *current, Interval *newInterval, int
         if (node) {
             deleteReservation(tree, node->interval);
             int add = addReservation(tree, id, newInterval, description);
-            if (add == 0) { // if add don't work
+            if (add == 0) {
+                // if add don't work
                 free(newInterval);
                 addReservation(tree, id, current, description);
-            }
-            else
+            } else
                 free(current);
         } else
             printf("resavation unavailable \n");
@@ -272,21 +269,16 @@ void extractSubString(char *src, char *dest, unsigned int start, unsigned int le
 }
 
 char *getParsedDate(unsigned int date) {
-    char buffer[20] = "", day[3] = "", month[3] = "";
-    sprintf(buffer, "%d", date);
     char *formatedDate = malloc(sizeof(char) * 15);
 
-    if (!formatedDate) return NULL;
+    unsigned int month = date / 100;
+    unsigned int day = date % 100;
 
-    if (strlen(buffer) == 3) {
-        snprintf(month, sizeof(month), "0%c", buffer[0]);
-        extractSubString(buffer, day, 1, 2);
-    } else {
-        extractSubString(buffer, month, 0, 2);
-        extractSubString(buffer, day, 2, 2);
-    }
+    char *cMonth = (month < 10 ? "0" : "");
+    char *cDay = (day < 10 ? "0" : "");
 
-    snprintf(formatedDate, 15, "%s/%s/2024", day, month);
+
+    sprintf(formatedDate, "%s%d/%s%d/2024", cDay, day, cMonth, month);
 
     return formatedDate;
 }
