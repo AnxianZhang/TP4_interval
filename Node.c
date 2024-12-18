@@ -9,12 +9,6 @@
 #include <string.h>
 #include "Interval.h"
 
-/*
-* * retoune:
- *  1 si a est a droite de b
- *  0 si a est a gauche de b
- *  -1 si les deux dates sont pareille
- */
 int comparatorDate(unsigned int a, unsigned int b) {
     if (a / 100 > b / 100)
         return 1;
@@ -29,20 +23,13 @@ int comparatorDate(unsigned int a, unsigned int b) {
     return 0;
 }
 
-/*
- *NB a et b sont des dates
- * comparatorInterval retoune 1 si a est a droite de b
- *                     0 si a est a gauche d eb
- *                     -1 si les deux intervales sont pareille et 0 si non
- */
-
-int comparatorInteval(Interval *a, Interval *b) {
+int comparatorInteval(const Interval *a, const Interval *b) {
     if (comparatorDate(a->start, b->start) == -1 && comparatorDate(a->end, b->end) == -1)
         return -1;
     return 0;
 }
 
-Node *searchReservation(const Tree tree, Interval *interval) {
+Node *searchReservation(const Tree tree, const Interval *interval) {
     if (tree == NULL)
         return NULL;
     Node *node = tree;
@@ -144,8 +131,8 @@ void *father(Tree tree, Node *node) {
         }
         if (test == 1)
             return q;
-        else
-            return p; //p=NULL
+        // p = NULL
+        return p;
     }
 }
 
@@ -158,15 +145,15 @@ Node *successor(Tree tree, Tree node) {
                 p = p->left;
             }
             return p;
-        } else {
-            p = node;
-            Node *pere = father(tree, p);
-            while (p && pere->right == p) {
-                p = pere;
-                pere = father(tree, pere);
-            }
-            return pere;
         }
+
+        p = node;
+        Node *pere = father(tree, p);
+        while (p && pere->right == p) {
+            p = pere;
+            pere = father(tree, pere);
+        }
+        return pere;
     }
 }
 
