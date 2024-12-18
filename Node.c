@@ -61,13 +61,17 @@ Node *createNode(unsigned int id, char *description, Interval *interval) {
     if (!interval) return NULL;
 
     Node *n = malloc(sizeof(Node));
-    if (!n) return NULL;
+    if (!n) {
+        printf("MALLOC FAILED IN createNode");
+        return NULL;
+    }
 
     n->id = id;
     n->description = malloc(sizeof(char) * strlen(description));
 
     if (!n->description) {
         free(n);
+        printf("MALLOC FAILED IN createNode");
         return NULL;
     }
 
@@ -79,26 +83,9 @@ Node *createNode(unsigned int id, char *description, Interval *interval) {
     return n;
 }
 
-// Tree createEmptyTree() {
-//     Tree tree = malloc(sizeof(Tree));
-//     if (!tree) return NULL;
-//
-//     tree->id = 0;
-//     tree->description =
-// }
-
 int addReservation(Tree *tree, unsigned int id, Interval *interval, char *description) {
     if (*tree == NULL) {
         *tree = createNode(id, description, interval);
-        // tree=NULL;
-        // tree->id=id;
-        // tree->description = malloc(sizeof(char) * strlen(description));
-        // if (!tree->description) {
-        //     free(tree);
-        //     return -1;
-        // }
-        // strcpy(tree->description, description);
-        // tree->interval = interval;
         return 1;
     }
     Node *test_node = searchReservation(*tree, interval);
@@ -270,6 +257,10 @@ void extractSubString(char *src, char *dest, unsigned int start, unsigned int le
 
 char *getParsedDate(unsigned int date) {
     char *formatedDate = malloc(sizeof(char) * 15);
+    if (!formatedDate) {
+        printf("MALLOC FAILED IN getParsedDate");
+        return NULL;
+    }
 
     unsigned int month = date / 100;
     unsigned int day = date % 100;

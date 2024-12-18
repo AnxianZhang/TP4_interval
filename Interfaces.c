@@ -121,8 +121,12 @@ void interfaceShowPeriod(const Tree tree) {
 }
 
 void interfaceAddreservation(Tree *tree) {
-    int id = getUserNumber("enter your  id:  ");;
+    int id = getUserNumber("enter your  id:  ");
     Interval *interval = malloc(sizeof(Interval));
+    if (!interval) {
+        printf("MALLOC FAILED IN interfaceAddreservation");
+        return;
+    }
 
     askForInterval(interval);
 
@@ -132,7 +136,16 @@ void interfaceAddreservation(Tree *tree) {
 
 void interfaceUpdateReservation(Tree *tree) {
     Interval *current = malloc(sizeof(Interval));
+    if (!current) {
+        printf("MALLOC FAILED IN interfaceUpdateReservation");
+        return;
+    }
+
     Interval *newInterval = malloc(sizeof(Interval));
+    if (!newInterval) {
+        printf("MALLOC FAILED IN interfaceUpdateReservation");
+        return;
+    }
 
     printf("\n*******> current interval");
     askForInterval(current);
@@ -149,6 +162,10 @@ void interfaceUpdateReservation(Tree *tree) {
 
 void interfaceDeletereservaion(Tree *tree) {
     Interval *current = malloc(sizeof(Interval));
+    if (!current) {
+        printf("MALLOC FAILED IN interfaceDeletereservaion");
+        return;
+    }
 
     askForInterval(current);
 
