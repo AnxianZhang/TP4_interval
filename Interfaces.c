@@ -14,15 +14,7 @@
 
 #include "interval.h"
 
-// void interfaceAddreservation(const Tree tree) {
-//     int id=20;
-//     Interval *i = malloc(sizeof(Interval));
-//     i->start =705;
-//     i->end =707;
-//     char description[50]="pppppppppppppppp";
-//     addReservation(tree, id, i, &description);
-// }
-int searchId(Tree tree, int id) {
+int searchId(const Tree tree, int id) {
     if (tree == NULL)
         return 0;
     if (tree->id == id)
@@ -155,14 +147,6 @@ void interfaceUpdateReservation(Tree *tree) {
     updateReservation(tree, current, newInterval, id, description);
 }
 
-// void interfaceDeletereservaion(Tree *tree) {
-//     int id=1;
-//     Interval *i = malloc(sizeof(Interval));
-//     i->start =110;
-//     i->end =214;
-//     deleteReservation(tree, i);
-// }
-
 void interfaceDeletereservaion(Tree *tree) {
     Interval *current = malloc(sizeof(Interval));
 
@@ -170,28 +154,6 @@ void interfaceDeletereservaion(Tree *tree) {
 
     deleteReservation(tree, current);
 }
-
-// void interfaceSearchReservation(const Tree tree) {
-//     int id=1;
-//     Interval *i = malloc(sizeof(Interval));
-//     i->start =110;
-//     i->end =214;
-//     Node *node = searchReservation(tree, i, id);
-//
-//     if (node) {
-//         char *startDate = getParsedDate(node->interval->start);
-//         char *endDate = getParsedDate(node->interval->end);
-//
-//         printf("\n--------> votre reservation <-----------");
-//         printf("\n id: %d", node->id);
-//         printf("\nstart date :%s", startDate);
-//         printf("\nend date :%s", endDate);
-//         printf("\ndescription: %s", node->description);
-//         printf("\n----------------------------------------\n");
-//     } else {
-//         printErrorTreeMessages("\n votre reservation not found");
-//     }
-// }
 
 void interfaceSearchReservation(const Tree tree) {
     Interval current;

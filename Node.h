@@ -17,8 +17,6 @@ typedef struct Node {
 
 typedef Node *Tree;
 
-Node *createNode(unsigned int id, char *description, Interval *interval);
-
 int addReservation(Tree *tree, unsigned int id, Interval *interval, char *description);
 
 Node *searchReservation( Tree tree, Interval *interval);
@@ -30,10 +28,6 @@ void updateReservation(Tree *tree, Interval *current, Interval *newInterval, int
 char *getParsedDate(unsigned int date);
 
 void showTree(const Tree tree);
-
-int isIdPresent(const Tree tree, unsigned int id);
-
-int isIntervalContainingReservation(const Tree tree, const Interval *period);
 
 int showCompany(const Tree tree, unsigned int id);
 
