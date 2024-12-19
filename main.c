@@ -28,7 +28,7 @@ int main() {
         printf("| Q. Leave\n");
         printf("##############################################\n");
 
-        choice = getUserNumber("Enter your choice:") + '0'; // convert to char
+        choice = getUserString("Enter your choice:")[0]; // convert to char
 
         switch (choice) {
             case '1':
