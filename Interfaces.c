@@ -7,6 +7,7 @@
 #include <stdio.h>
 
 #include <stdlib.h>
+#include <string.h>
 
 #include "Utile.h"
 
@@ -195,4 +196,57 @@ void interfaceSearchReservation(const Tree tree) {
     } else {
         printErrorTreeMessages("\n THE RESERVATION DOESN'T EXIST !");
     }
+}
+
+void exportTreeToCSV(const Tree tree, FILE *file) {
+    if (!tree)
+        return;
+
+    exportTreeToCSV(tree->left, file);
+
+    fprintf(file, "%d,%s,%d,%d\n",
+            tree->id,
+            tree->description,
+            tree->interval->start,
+            tree->interval->end);
+
+    exportTreeToCSV(tree->right, file);
+}
+
+void interfaceImportData(Tree *tree) {
+    char *filename = getUserString("Enter a path to TP4_interval.txt file:");
+
+    FILE *file = fopen(strcat(filename, "\\TP4_reservation.txt"), "r");
+    if (!file) {
+        printErrorTreeMessages("Error opening file.\nThe file might not exist or the path is wrong");
+        return;
+    }
+
+    char line[MAX_BUFFER_SIZE];
+    int id, start, end;
+    char description[128];
+
+    fgets(line, sizeof(line), file); // ignore te CSV description format
+
+    while (fgets(line, sizeof(line), file))
+        if (sscanf(line, "%d,%127[^,],%d,%d", &id, description, &start, &end) == 4)
+            addReservation(tree, id, createInterval(start, end), description);
+
+    fclose(file);
+}
+
+void interfaceExportData(const Tree tree) {
+    char *filename = getUserString("Enter a directory:");
+
+    FILE *file = fopen(strcat(filename, "\\TP4_reservation.txt"), "w");
+    if (!file) {
+        printErrorTreeMessages("Error opening file.\nThe file might not exist or the path is wrong");
+        return;
+    }
+
+    fprintf(file, "Formated data: ID, Description, Start, End\n");
+
+    exportTreeToCSV(tree, file);
+
+    fclose(file);
 }

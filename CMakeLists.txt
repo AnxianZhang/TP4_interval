@@ -12,4 +12,5 @@ add_executable(main.c
         Utile.c
         Interfaces.h
         Interfaces.c
+        Interval.c
 )

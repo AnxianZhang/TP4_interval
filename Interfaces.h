@@ -20,9 +20,13 @@ void interfaceShowPeriod(const Tree tree);
 
 void interfaceAddreservation(Tree *tree);
 
-void interfaceUpdateReservation( Tree *tree);
+void interfaceUpdateReservation(Tree *tree);
 
-void interfaceDeletereservaion(Tree* tree);
+void interfaceDeletereservaion(Tree *tree);
 
 void interfaceSearchReservation(const Tree tree);
+
+void interfaceExportData(const Tree tree);
+
+void interfaceImportData(Tree *tree);
 #endif //INTERFACES_H

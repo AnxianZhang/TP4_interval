@@ -18,6 +18,15 @@ typedef struct Node {
 typedef Node *Tree;
 
 /**
+ * Create new node with the given parameters
+ * @param id
+ * @param description
+ * @param interval
+ * @return
+ */
+Node *createNode(unsigned int id, char *description, Interval *interval);
+
+/**
  * Add a new reservation
  * @param tree
  * @param id
@@ -33,7 +42,7 @@ int addReservation(Tree *tree, unsigned int id, Interval *interval, char *descri
  * @param interval
  * @return
  */
-Node *searchReservation(Tree tree, Interval *interval);
+Node *searchReservation(const Tree tree, const Interval *interval);
 
 /**
  * Delete a reservation through th provided interval
