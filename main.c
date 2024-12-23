@@ -65,7 +65,6 @@ int main() {
         emptyBuffer();
         printf("\n\n\n");
     }
-
     printf("\n");
 
     deleteAll(tree);

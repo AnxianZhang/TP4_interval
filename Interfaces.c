@@ -199,6 +199,8 @@ void interfaceSearchReservation(const Tree tree) {
 
 void interfacenbReservationByCompany(Tree tree) {
     int nb=nbNodes(tree);
+    int *nb_company=malloc(sizeof(int));
+    *nb_company=0;
     int **mat=(int **)malloc(2*sizeof(int *));
     for (int i = 0; i < 2; i++) {
         mat[i] = (int *)malloc(nb * sizeof(int));
@@ -206,9 +208,10 @@ void interfacenbReservationByCompany(Tree tree) {
     for (int i = 0; i < nb; i++) {
             mat[0][i] = mat[1][i] = 0;
         }
-    nbReservationByCompany(tree, mat);
+
+    nbReservationByCompany(tree, mat,nb_company);
     printf("\n<-------> COMPANY WHIT NOMBER RESERVATION  <----->");
-    for (int i = 0; i < nb; i++) {
+    for (int i = 0; i < *nb_company; i++) {
         printf("\n--> company:  %d -- nomber of reservation : %d \t", mat[0][i], mat[1][i]);
     }
     printf("\n<-------------->*******************<------------->");

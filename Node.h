@@ -97,6 +97,7 @@ void deleteAll(Tree tree);
  */
 int comparatorDate(unsigned int a, unsigned int b);
 
-void nbReservationByCompany(Tree tree,int **mat);
+void nbReservationByCompany(Tree tree,int **mat,int *nb);
 int nbNodes(Tree tree);
+Node *createNode(unsigned int id, char *description, Interval *interval);
 #endif //NODE_H

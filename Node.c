@@ -360,26 +360,34 @@ void idArray(Tree tree , int *tab , int *indice) {
     idArray(tree->left, tab, indice);
     idArray(tree->right, tab, indice);
 }
-void nbReservationByCompany(Tree tree,int **mat) {
+void nbReservationByCompany(Tree tree,int **mat,int *nb) {
     if (!tree) return;
     int *tab=(int *)malloc(nbNodes(tree)*sizeof(int));
     int *indice=(int *)malloc(sizeof(int));
     *indice = 0;
     idArray(tree, tab, indice);
-    int i, j , test ,nb=0;
-    for(i=0;i<*indice;i++) {
+    int i, j , test ;
+    mat[0][*nb] = tab[0];
+    int count=0;
+    for(j=0;j<*indice;j++)
+        if(tab[0]==tab[j])
+            count++;
+    mat[1][*nb] = count;
+    (*nb)++;
+
+    for(i=1;i<*indice;i++) {
         test=0;
         for(j=0;j<i;j++)
             if (mat[0][j] == tab[i])
                 test++;
         if(test == 0) {
-            mat[0][nb] = tab[i];
-            nb++;
-            int count=0;
+            mat[0][*nb] = tab[i];
+            count=0;
             for(j=0;j<*indice;j++)
                 if(tab[i]==tab[j])
                     count++;
-            mat[1][nb] = count;
+            mat[1][*nb] = count;
+            (*nb)++;
         }
 
     }
