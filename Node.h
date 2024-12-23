@@ -96,4 +96,7 @@ void deleteAll(Tree tree);
  *        -1 if both are the same
  */
 int comparatorDate(unsigned int a, unsigned int b);
+
+void nbReservationByCompany(Tree tree,int **mat);
+int nbNodes(Tree tree);
 #endif //NODE_H

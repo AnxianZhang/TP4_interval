@@ -25,4 +25,6 @@ void interfaceUpdateReservation( Tree *tree);
 void interfaceDeletereservaion(Tree* tree);
 
 void interfaceSearchReservation(const Tree tree);
+
+void interfacenbReservationByCompany(Tree tree);
 #endif //INTERFACES_H

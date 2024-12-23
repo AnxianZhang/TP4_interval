@@ -14,7 +14,7 @@ int main() {
 
     char choice = ' ';
 
-    while (choice != '8') {
+    while (choice != '9') {
         printf("#################### MENU ####################\n");
         printf("| 1. Show all reservations\n");
         printf("| 2. Show all reservations of a company\n");
@@ -23,7 +23,9 @@ int main() {
         printf("| 5. Update a reservation\n");
         printf("| 6. Delete a reservation\n");
         printf("| 7. Search a reservation\n");
-        printf("| 8. Leave\n");
+        printf("| 8. company whith nomber of reservation\n");
+        printf("| 9. Leave\n");
+
         printf("##############################################\n");
 
         choice = getUserNumber("Enter your choice:") + '0'; // convert to char
@@ -51,6 +53,9 @@ int main() {
                 interfaceSearchReservation(tree);
                 break;
             case '8':
+                interfacenbReservationByCompany(tree);
+            break;
+            case '9':
                 printf("\n======== PROGRAM FINISHED ========\n");
                 break;
             default:

@@ -196,3 +196,20 @@ void interfaceSearchReservation(const Tree tree) {
         printErrorTreeMessages("\n THE RESERVATION DOESN'T EXIST !");
     }
 }
+
+void interfacenbReservationByCompany(Tree tree) {
+    int nb=nbNodes(tree);
+    int **mat=(int **)malloc(2*sizeof(int *));
+    for (int i = 0; i < 2; i++) {
+        mat[i] = (int *)malloc(nb * sizeof(int));
+    }
+    for (int i = 0; i < nb; i++) {
+            mat[0][i] = mat[1][i] = 0;
+        }
+    nbReservationByCompany(tree, mat);
+    printf("\n<-------> COMPANY WHIT NOMBER RESERVATION  <----->");
+    for (int i = 0; i < nb; i++) {
+        printf("\n--> company:  %d -- nomber of reservation : %d \t", mat[0][i], mat[1][i]);
+    }
+    printf("\n<-------------->*******************<------------->");
+}
