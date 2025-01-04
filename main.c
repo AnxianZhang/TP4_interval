@@ -23,8 +23,9 @@ int main() {
         printf("| 5. Update a reservation\n");
         printf("| 6. Delete a reservation\n");
         printf("| 7. Search a reservation\n");
-        printf("| 8. Export reservation(s) to CSV\n");
-        printf("| 9. Import reservation(s)\n");
+        printf("| 8. Show the number of reservation of all companies\n");
+        printf("| A. Export reservation(s) to CSV\n");
+        printf("| B. Import reservation(s)\n");
         printf("| Q. Leave\n");
         printf("##############################################\n");
 
@@ -53,9 +54,12 @@ int main() {
                 interfaceSearchReservation(tree);
                 break;
             case '8':
+                interfaceShowyCompaniesReservation(tree);
+                break;
+            case 'A':
                 interfaceExportData(tree);
                 break;
-            case '9':
+            case 'B':
                 interfaceImportData(&tree);
                 break;
             case 'Q':

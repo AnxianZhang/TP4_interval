@@ -1,5 +1,5 @@
 //
-// Created by gadan on 12/5/2024.
+// Created by bryan and Anxian 12/5/2024.
 //
 
 #ifndef NODE_H
@@ -105,4 +105,8 @@ void deleteAll(Tree tree);
  *        -1 if both are the same
  */
 int comparatorDate(unsigned int a, unsigned int b);
+
+void nbReservationByCompany(Tree tree,int **mat,int *nb);
+int nbNodes(Tree tree);
+Node *createNode(unsigned int id, char *description, Interval *interval);
 #endif //NODE_H

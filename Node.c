@@ -348,6 +348,52 @@ int showPeriod(const Tree tree, const Interval *period) {
     return currentFlag || leftFlag || rightFlag;
 }
 
+int nbNodes(Tree tree) {
+    if (!tree) return 0;
+    return 1 + nbNodes(tree->left) + nbNodes(tree->right);
+}
+
+void idArray(Tree tree, int *tab, int *indice) {
+    if (!tree) return;
+    tab[*indice] = tree->id;
+    *indice = *indice + 1;
+    idArray(tree->left, tab, indice);
+    idArray(tree->right, tab, indice);
+}
+
+void nbReservationByCompany(Tree tree, int **mat, int *nb) {
+    if (!tree) return;
+    int *tab = (int *) malloc(nbNodes(tree) * sizeof(int));
+    int *indice = (int *) malloc(sizeof(int));
+    *indice = 0;
+    idArray(tree, tab, indice);
+    int i, j, test;
+    mat[0][*nb] = tab[0];
+    int count = 0;
+    for (j = 0; j < *indice; j++)
+        if (tab[0] == tab[j])
+            count++;
+    mat[1][*nb] = count;
+    (*nb)++;
+
+    for (i = 1; i < *indice; i++) {
+        test = 0;
+        for (j = 0; j < i; j++)
+            if (mat[0][j] == tab[i])
+                test++;
+        if (test == 0) {
+            mat[0][*nb] = tab[i];
+            count = 0;
+            for (j = 0; j < *indice; j++)
+                if (tab[i] == tab[j])
+                    count++;
+            mat[1][*nb] = count;
+            (*nb)++;
+        }
+    }
+}
+
+
 void deleteAll(Tree tree) {
     if (!tree) return;
 

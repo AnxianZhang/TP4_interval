@@ -29,4 +29,6 @@ void interfaceSearchReservation(const Tree tree);
 void interfaceExportData(const Tree tree);
 
 void interfaceImportData(Tree *tree);
+
+void interfaceShowyCompaniesReservation(const Tree tree);
 #endif //INTERFACES_H
