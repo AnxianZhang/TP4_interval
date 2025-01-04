@@ -264,9 +264,14 @@ void interfaceShowyCompaniesReservation(const Tree tree) {
     }
 
     nbReservationByCompany(tree, mat, nb_company);
-    printf("\n-----------------------> COMPANIES RESERVATIONS <-----------------------");
+    printf("\n-----------------------> COMPANIES NUMBER OF RESERVATIONS <-------------");
     for (int i = 0; i < *nb_company; i++) {
-        printf("\n--> company:  %d -- nomber of reservation : %d \t", mat[0][i], mat[1][i]);
+        printf("\n--> company:  %d -- reservation(s) : %d \t", mat[0][i], mat[1][i]);
     }
     printf("\n------------------------------------------------------------------------\n");
+
+    free(nb_company);
+    for (int i = 0; i < 2; ++i)
+        free(mat[i]);
+    free(mat);
 }
