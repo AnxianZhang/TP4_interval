@@ -348,12 +348,12 @@ int showPeriod(const Tree tree, const Interval *period) {
     return currentFlag || leftFlag || rightFlag;
 }
 
-int nbNodes(Tree tree) {
+int nbNodes(const Tree tree) {
     if (!tree) return 0;
     return 1 + nbNodes(tree->left) + nbNodes(tree->right);
 }
 
-void idArray(Tree tree, int *tab, int *indice) {
+void idArray(const Tree tree, int *tab, int *indice) {
     if (!tree) return;
     tab[*indice] = tree->id;
     *indice = *indice + 1;

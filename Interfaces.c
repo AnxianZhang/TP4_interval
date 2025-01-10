@@ -226,7 +226,7 @@ void interfaceImportData(Tree *tree) {
     int id, start, end;
     char description[128];
 
-    fgets(line, sizeof(line), file); // ignore te CSV description format
+    fgets(line, sizeof(line), file); // ignore the first line in the CSV (it is the description format)
 
     while (fgets(line, sizeof(line), file))
         if (sscanf(line, "%d,%127[^,],%d,%d", &id, description, &start, &end) == 4)

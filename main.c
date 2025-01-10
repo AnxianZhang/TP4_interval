@@ -63,7 +63,9 @@ int main() {
                 interfaceImportData(&tree);
                 break;
             case 'Q':
-                printf("\n======== PROGRAM FINISHED ========\n");
+                printf("\n========== PROGRAM FINISHED ==========\n");
+                printf("\n======== PRESS ENTER TO FINISH ========\n");
+
                 break;
             default:
                 printf("\n\nERROR : INVALID CHOICE ! ");

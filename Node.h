@@ -106,7 +106,19 @@ void deleteAll(Tree tree);
  */
 int comparatorDate(unsigned int a, unsigned int b);
 
-void nbReservationByCompany(Tree tree,int **mat,int *nb);
-int nbNodes(Tree tree);
-Node *createNode(unsigned int id, char *description, Interval *interval);
+/**
+ * Get the number of reservations of all companies
+ * @param tree
+ * @param mat
+ * @param nb
+ */
+void nbReservationByCompany(Tree tree, int **mat, int *nb);
+
+/**
+ * Get the number of node un a Tree
+ * @param tree
+ * @return
+ */
+int nbNodes(const Tree tree);
+
 #endif //NODE_H
